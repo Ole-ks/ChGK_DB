@@ -1,0 +1,30 @@
+{% extends 'questionbase/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <table class="table" style="border: 0px">
+            <form method="POST" class="post-form" enctype="multipart/form-data">
+                <tr>
+                    {% csrf_token %}
+                    {% for error in form.non_field_errors %}
+                    <div class="form-group has-errors text-danger small">
+                        {{error}}
+                    </div>
+                    {% endfor %}
+                </tr>
+
+                {% for field in form %}
+                <tr>
+                    <div class="form-group">
+                        <td>{{ field.label_tag }}</td>
+                        <td>{{field}}</td>
+                    </div>
+                </tr>
+                {% endfor %}
+                <tfoot><th colspan="2">
+                    <button type="submit" class="btn btn-primary" style="width:100%">Save</button>
+                </th></tfoot>
+            </form>
+        </table>
+    </div>
+{% endblock %}

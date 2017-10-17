@@ -1,0 +1,92 @@
+{% extends 'questionbase/base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+
+    {% for quest in questions %}
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                <p><strong>Вопрос: </strong>{{ quest.qtext|linebreaksbr }}</p>
+                <ul class="list-inline">
+                {% if quest.qlink1 %}
+                    <li><a href="#qimg1{{ quest.pk }}" data-toggle="collapse">
+                        <img src="/{{ quest.qlink1 }}" height="150" alt="упс, картинка потерялась"></a>
+                    </li>
+                    <div id="qimg1{{ quest.pk }}" class="collapse" alt="упс, картинка потерялась">
+                        <br><img src="/{{ quest.qlink1 }}" style="max-width: 100%; height: auto;">
+                    </div>
+                {% endif %}
+                {% if quest.qlink2 %}
+                    <li><a href="#qimg2{{ quest.pk }}" data-toggle="collapse">
+                        <img src="/{{ quest.qlink2 }}" height="150" alt="упс, картинка потерялась"></a>
+                    </li>
+                    <div id="qimg2{{ quest.pk }}" class="collapse" alt="упс, картинка потерялась">
+                        <br><img src="/{{ quest.qlink2 }}" style="max-width: 100%; height: auto;">
+                    </div>
+                {% endif %}
+                {% if quest.qlink3 %}
+                    <li><a href="#qimg3{{ quest.pk }}" data-toggle="collapse">
+                        <img src="/{{ quest.qlink3 }}" height="150" alt="упс, картинка потерялась"></a>
+                    </li>
+                    <div id="qimg3{{ quest.pk }}" class="collapse" alt="упс, картинка потерялась">
+                        <br><img src="/{{ quest.qlink3 }}" style="max-width: 100%; height: auto;">
+                    </div>
+                {% endif %}
+                </ul>
+
+                <p><strong>Ответ: </strong>{{ quest.answer|linebreaksbr }}</p>
+                <ul class="list-inline">
+                {% if quest.alink1 %}
+                    <li><a href="#aimg1{{ quest.pk }}" data-toggle="collapse">
+                        <img src="/{{ quest.alink1 }}" height="150" alt="упс, картинка потерялась"></a>
+                    </li>
+                    <div id="aimg1{{ quest.pk }}" class="collapse" alt="упс, картинка потерялась">
+                        <br><img src="/{{ quest.alink1 }}" style="max-width: 100%; height: auto;">
+                    </div>
+                {% endif %}
+                {% if quest.alink2 %}
+                    <li><a href="#aimg2{{ quest.pk }}" data-toggle="collapse">
+                        <img src="/{{ quest.alink2 }}" height="150" alt="упс, картинка потерялась"></a>
+                    </li>
+                    <div id="aimg2{{ quest.pk }}" class="collapse" alt="упс, картинка потерялась">
+                        <br><img src="/{{ quest.alink2 }}" style="max-width: 100%; height: auto;">
+                    </div>
+                {% endif %}
+                {% if quest.alink3 %}
+                    <li><a href="#aimg3{{ quest.pk }}" data-toggle="collapse">
+                        <img src="/{{ quest.alink3 }}" height="150" alt="упс, картинка потерялась"></a>
+                    </li>
+                    <div id="aimg3{{ quest.pk }}" class="collapse" alt="упс, картинка потерялась">
+                        <br><img src="/{{ quest.alink3 }}" style="max-width: 100%; height: auto;">
+                    </div>
+                {% endif %}
+                </ul>
+
+
+                <div id="qmore{{ quest.pk }}" class="collapse">
+                    {% if quest.altanswer %}
+                        <p><strong>Зачет: </strong>{{ quest.altanswer|linebreaksbr }}</p>
+                    {% endif %}
+                    <p><strong>Комментарий: </strong>{{ quest.comment|linebreaksbr }}</p>
+                    <p><strong>Автор: </strong>{{ quest.author|linebreaksbr }}</p>
+                    <p><strong>Источник: </strong>{{ quest.source|linebreaksbr }}</p>
+                    {% if quest.is_played %}
+                        <p>Игралось!</p>
+                    {% endif %}
+                    {% if quest.is_bb %}
+                        <p>Черный ящик!</p>
+                    {% endif %}
+                </div>
+
+                <ul class="list-inline">
+                    <li><a href="#qmore{{ quest.pk }}" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down">подробнее...</span></a></li>
+                    <li><a href="{% url 'quest_edit' pk=quest.pk %}"><span class="glyphicon glyphicon-pencil">редактировать</span></a></li>
+                    <!--<li><a href="{% url 'quest_detail' pk=quest.pk %}">подробнее...</a></li>-->
+                </ul>
+            </div>
+        </div>
+
+    {% endfor %}
+</div>
+{% endblock %}
