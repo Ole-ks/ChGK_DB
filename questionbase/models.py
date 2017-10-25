@@ -21,3 +21,87 @@ class Question(models.Model):
 
     def __str__(self):
         return self.qtext
+
+    def ext_q1(self):
+        type = 'non'
+        ext = str(self.qlink1).split('.')[-1]
+        if len(ext) > 0:
+            if ext in ['jpg', 'jpeg', 'bmp']:
+                type = 'img'
+            elif ext in ['amv', 'avi', 'flv', 'mov', 'mp4', 'mpg', 'mpeg', 'ogg', 'vob', 'wmv']:
+                type = 'video'
+            elif ext in ['mp3']:
+                type = 'audio'
+            else:
+                type = 'other'
+        return type
+
+    def ext_q2(self):
+        type = 'non'
+        ext = str(self.qlink2).split('.')[-1]
+        if len(ext) > 0:
+            if ext in ['jpg', 'jpeg', 'bmp']:
+                type = 'img'
+            elif ext in ['amv', 'avi', 'flv', 'mov', 'mp4', 'mpg', 'mpeg', 'ogg', 'vob', 'wmv']:
+                type = 'video'
+            elif ext in ['mp3']:
+                type = 'audio'
+            else:
+                type = 'other'
+        return type
+
+    def ext_q3(self):
+        type = 'non'
+        ext = str(self.qlink3).split('.')[-1]
+        if len(ext) > 0:
+            if ext in ['jpg', 'jpeg', 'bmp']:
+                type = 'img'
+            elif ext in ['amv', 'avi', 'flv', 'mov', 'mp4', 'mpg', 'mpeg', 'ogg', 'vob', 'wmv']:
+                type = 'video'
+            elif ext in ['mp3']:
+                type = 'audio'
+            else:
+                type = 'other'
+        return type
+
+    def ext_a1(self):
+        type = 'non'
+        ext = str(self.alink1).split('.')[-1]
+        if len(ext) > 0:
+            if ext in ['jpg', 'jpeg', 'bmp']:
+                type = 'img'
+            elif ext in ['amv', 'avi', 'flv', 'mov', 'mp4', 'mpg', 'mpeg', 'ogg', 'vob', 'wmv']:
+                type = 'video'
+            elif ext in ['mp3']:
+                type = 'audio'
+            else:
+                type = 'other'
+        return type
+
+    def ext_a2(self):
+        type = 'non'
+        ext = str(self.alink2).split('.')[-1]
+        if len(ext) > 0:
+            if ext in ['jpg', 'jpeg', 'bmp']:
+                type = 'img'
+            elif ext in ['amv', 'avi', 'flv', 'mov', 'mp4', 'mpg', 'mpeg', 'ogg', 'vob', 'wmv']:
+                type = 'video'
+            elif ext in ['mp3']:
+                type = 'audio'
+            else:
+                type = 'other'
+        return type
+
+    def ext_a3(self):
+        type = 'non'
+        ext = str(self.alink3).split('.')[-1]
+        if len(ext) > 0:
+            if ext in ['jpg', 'jpeg', 'bmp']:
+                type = 'img'
+            elif ext in ['amv', 'avi', 'flv', 'mov', 'mp4', 'mpg', 'mpeg', 'ogg', 'vob', 'wmv']:
+                type = 'video'
+            elif ext in ['mp3']:
+                type = 'audio'
+            else:
+                type = 'other'
+        return type

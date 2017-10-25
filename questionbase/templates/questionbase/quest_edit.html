@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="container">
-        <table class="table" style="border: 0px">
+        <table class="table noborder">
             <form method="POST" class="post-form" enctype="multipart/form-data">
                 <tr>
                     {% csrf_token %}
@@ -22,7 +22,7 @@
                 </tr>
                 {% endfor %}
                 <tfoot><th colspan="2">
-                    <button type="submit" class="btn btn-primary" style="width:100%">Save</button>
+                    <button type="submit" class="btn btn-primary fullwidth">Save</button>
                 </th></tfoot>
             </form>
         </table>

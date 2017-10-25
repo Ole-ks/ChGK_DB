@@ -3,64 +3,105 @@
 {% block content %}
 <div class="container-fluid">
 
+    <button onclick="topFunction()" id="scrollBtn" class="btn btn-warning btn-lg" title="Go to top"><span class="glyphicon glyphicon-arrow-up"></span></button>
     {% for quest in questions %}
-        <div class="panel panel-default">
-            <div class="panel-body">
 
+    {% if quest.is_played %}
+        <div class="panel panel-default">
+    {% else %}
+        <div class="panel panel-primary">
+    {% endif %}
+            <div class="panel-body">
                 <p><strong>Вопрос: </strong>{{ quest.qtext|linebreaksbr }}</p>
-                <ul class="list-inline">
-                {% if quest.qlink1 %}
-                    <li><a href="#qimg1{{ quest.pk }}" data-toggle="collapse">
-                        <img src="/{{ quest.qlink1 }}" height="150" alt="упс, картинка потерялась"></a>
-                    </li>
-                    <div id="qimg1{{ quest.pk }}" class="collapse" alt="упс, картинка потерялась">
-                        <br><img src="/{{ quest.qlink1 }}" style="max-width: 100%; height: auto;">
-                    </div>
-                {% endif %}
-                {% if quest.qlink2 %}
-                    <li><a href="#qimg2{{ quest.pk }}" data-toggle="collapse">
-                        <img src="/{{ quest.qlink2 }}" height="150" alt="упс, картинка потерялась"></a>
-                    </li>
-                    <div id="qimg2{{ quest.pk }}" class="collapse" alt="упс, картинка потерялась">
-                        <br><img src="/{{ quest.qlink2 }}" style="max-width: 100%; height: auto;">
-                    </div>
-                {% endif %}
-                {% if quest.qlink3 %}
-                    <li><a href="#qimg3{{ quest.pk }}" data-toggle="collapse">
-                        <img src="/{{ quest.qlink3 }}" height="150" alt="упс, картинка потерялась"></a>
-                    </li>
-                    <div id="qimg3{{ quest.pk }}" class="collapse" alt="упс, картинка потерялась">
-                        <br><img src="/{{ quest.qlink3 }}" style="max-width: 100%; height: auto;">
-                    </div>
-                {% endif %}
+                <ul class="no-marker">
+                    {% if quest.ext_q1 == 'img' %}
+                        <li><a href="#qimg1{{ quest.pk }}" data-toggle="collapse">
+                            <img src="/{{ quest.qlink1 }}" height="150" alt="упс, картинка потерялась"></a>
+                        </li>
+                        <li><div id="qimg1{{ quest.pk }}" class="collapse">
+                            <img src="/{{ quest.qlink1 }}" class="responsive-img" alt="упс, картинка потерялась">
+                        </div></li>
+                    {% endif %}
+                    {% if quest.ext_q1 == 'video' %}
+                        <li><video src="/{{ quest.qlink1 }}" width="420" controls alt="упс, видео потерялось"></video></li>
+                    {% endif %}
+                    {% if quest.ext_q1 == 'other' %}
+                        <li><span class="glyphicon glyphicon-paperclip"></span>    {{ quest.qlink1 }}</li>
+                    {% endif %}
+                    {% if quest.ext_q2 == 'img' %}
+                        <li><a href="#qimg2{{ quest.pk }}" data-toggle="collapse">
+                            <img src="/{{ quest.qlink2 }}" height="150" alt="упс, картинка потерялась"></a>
+                        </li>
+                        <li><div id="qimg2{{ quest.pk }}" class="collapse">
+                            <img src="/{{ quest.qlink2 }}" class="responsive-img" alt="упс, картинка потерялась">
+                        </div></li>
+                    {% endif %}
+                    {% if quest.ext_q2 == 'video' %}
+                        <li><video src="/{{ quest.qlink2 }}" width="420" controls alt="упс, видео потерялось"></video></li>
+                    {% endif %}
+                    {% if quest.ext_q2 == 'other' %}
+                        <li><span class="glyphicon glyphicon-paperclip"></span>    {{ quest.qlink2 }}</li>
+                    {% endif %}
+                    {% if quest.ext_q3 == 'img' %}
+                        <li><a href="#qimg3{{ quest.pk }}" data-toggle="collapse">
+                            <img src="/{{ quest.qlink3 }}" height="150" alt="упс, картинка потерялась"></a>
+                        </li>
+                        <li><div id="qimg3{{ quest.pk }}" class="collapse">
+                            <img src="/{{ quest.qlink3 }}" class="responsive-img" alt="упс, картинка потерялась">
+                        </div></li>
+                    {% endif %}
+                    {% if quest.ext_q3 == 'video' %}
+                        <li><video src="/{{ quest.qlink3 }}" width="420" controls alt="упс, видео потерялось"></video></li>
+                    {% endif %}
+                    {% if quest.ext_q3 == 'other' %}
+                        <li><span class="glyphicon glyphicon-paperclip"></span>    {{ quest.qlink3 }}</li>
+                    {% endif %}
                 </ul>
 
                 <p><strong>Ответ: </strong>{{ quest.answer|linebreaksbr }}</p>
-                <ul class="list-inline">
-                {% if quest.alink1 %}
-                    <li><a href="#aimg1{{ quest.pk }}" data-toggle="collapse">
-                        <img src="/{{ quest.alink1 }}" height="150" alt="упс, картинка потерялась"></a>
-                    </li>
-                    <div id="aimg1{{ quest.pk }}" class="collapse" alt="упс, картинка потерялась">
-                        <br><img src="/{{ quest.alink1 }}" style="max-width: 100%; height: auto;">
-                    </div>
-                {% endif %}
-                {% if quest.alink2 %}
-                    <li><a href="#aimg2{{ quest.pk }}" data-toggle="collapse">
-                        <img src="/{{ quest.alink2 }}" height="150" alt="упс, картинка потерялась"></a>
-                    </li>
-                    <div id="aimg2{{ quest.pk }}" class="collapse" alt="упс, картинка потерялась">
-                        <br><img src="/{{ quest.alink2 }}" style="max-width: 100%; height: auto;">
-                    </div>
-                {% endif %}
-                {% if quest.alink3 %}
-                    <li><a href="#aimg3{{ quest.pk }}" data-toggle="collapse">
-                        <img src="/{{ quest.alink3 }}" height="150" alt="упс, картинка потерялась"></a>
-                    </li>
-                    <div id="aimg3{{ quest.pk }}" class="collapse" alt="упс, картинка потерялась">
-                        <br><img src="/{{ quest.alink3 }}" style="max-width: 100%; height: auto;">
-                    </div>
-                {% endif %}
+                <ul class="no-marker">
+                    {% if quest.ext_a1 == 'img' %}
+                        <li><a href="#aimg1{{ quest.pk }}" data-toggle="collapse">
+                            <img src="/{{ quest.alink1 }}" height="150" alt="упс, картинка потерялась"></a>
+                        </li>
+                        <li><div id="aimg1{{ quest.pk }}" class="collapse">
+                            <img src="/{{ quest.alink1 }}" class="responsive-img" alt="упс, картинка потерялась">
+                        </div></li>
+                    {% endif %}
+                    {% if quest.ext_a1 == 'video' %}
+                        <li><video src="/{{ quest.alink1 }}" width="420" controls alt="упс, видео потерялось"></video></li>
+                    {% endif %}
+                    {% if quest.ext_a1 == 'other' %}
+                        <li><span class="glyphicon glyphicon-paperclip"></span>    {{ quest.alink1 }}</li>
+                    {% endif %}
+                    {% if quest.ext_a2 == 'img' %}
+                        <li><a href="#aimg2{{ quest.pk }}" data-toggle="collapse">
+                            <img src="/{{ quest.alink2 }}" height="150" alt="упс, картинка потерялась"></a>
+                        </li>
+                        <li><div id="aimg2{{ quest.pk }}" class="collapse">
+                            <img src="/{{ quest.alink2 }}" class="responsive-img" alt="упс, картинка потерялась">
+                        </div></li>
+                    {% endif %}
+                    {% if quest.ext_a2 == 'video' %}
+                        <li><video src="/{{ quest.alink2 }}" width="420" controls alt="упс, видео потерялось"></video></li>
+                    {% endif %}
+                    {% if quest.ext_a2 == 'other' %}
+                        <li><span class="glyphicon glyphicon-paperclip"></span>    {{ quest.alink2 }}</li>
+                    {% endif %}
+                    {% if quest.ext_a3 == 'img' %}
+                        <li><a href="#aimg3{{ quest.pk }}" data-toggle="collapse">
+                            <img src="/{{ quest.alink3 }}" height="150" alt="упс, картинка потерялась"></a>
+                        </li>
+                        <li><div id="aimg3{{ quest.pk }}" class="collapse">
+                            <img src="/{{ quest.alink3 }}" class="responsive-img" alt="упс, картинка потерялась">
+                        </div></li>
+                    {% endif %}
+                    {% if quest.ext_a3 == 'video' %}
+                        <li><video src="/{{ quest.alink3 }}" width="420" controls alt="упс, видео потерялось"></video></li>
+                    {% endif %}
+                    {% if quest.ext_a3 == 'other' %}
+                        <li><span class="glyphicon glyphicon-paperclip"></span>    {{ quest.alink3 }}</li>
+                    {% endif %}
                 </ul>
 
 
@@ -89,4 +130,56 @@
 
     {% endfor %}
 </div>
+
+
+
+
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        {% if questions.has_previous %}
+            <li><a href="?page={{ questions.previous_page_number }}">previous</a></li>
+        {% endif %}
+
+        {% for i in questions.paginator.page_range %}
+            {% with border1=questions.number|add:-3 border2=questions.number|add:3 %}
+                {% if i > border1 and i < border2 or i == 1 or i == questions.paginator.num_pages %}
+                    {% if questions.number == i %}
+                        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% else %}
+                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                {% else %}
+                    {% if i == border1 or i == border2 %}
+                        <li><span aria-hidden="true">...</span></li>
+                    {% endif %}
+                {% endif %}
+            {% endwith %}
+        {% endfor %}
+
+        {% if questions.has_next %}
+            <li><a href="?page={{ questions.next_page_number }}">next</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+
+
+<script>
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("scrollBtn").style.display = "block";
+    } else {
+        document.getElementById("scrollBtn").style.display = "none";
+    }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+</script>
 {% endblock %}

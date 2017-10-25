@@ -1,8 +1,24 @@
-body {
-    padding-left: 15px;
+#scrollBtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+}
+
+.noborder {
+    border: 0px;
+}
+
+.fullwidth {
+    width:100%;
 }
 
 .responsive-img {
     max-width: 100%;
     height: auto;
+}
+
+ul.no-marker {
+    list-style-type: none;
 }

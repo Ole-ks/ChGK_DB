@@ -1,0 +1,40 @@
+{% extends "questionbase/base.html" %}
+
+{% block content %}
+    {% if form.errors %}
+        <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <table class="table noborder">
+                    <form method="POST" class="post-form" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <tr>
+
+                        <tr>
+                            <div class="form-group">
+                                <td>{{ form.username.label_tag }}</td>
+                                <td>{{ form.username }}</td>
+                            </div>
+                        </tr>
+                        <tr>
+                            <div class="form-group">
+                                <td>{{ form.password.label_tag }}</td>
+                                <td>{{ form.password }}</td>
+                            </div>
+                        </tr>
+
+                        <tfoot><th colspan="2">
+                            <button type="submit" class="btn btn-primary fullwidth">login</button>
+                            <input type="hidden" name="next" value="{{ next }}" />
+                        </th></tfoot>
+                    </form>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
