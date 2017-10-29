@@ -1,13 +1,13 @@
-{% extends 'base.html' %}
+{% extends 'questionbase/base.html' %}
 
 {% block content %}
-    <form method="get">
-        {{ filter.form.as_p }}
-        <button type="submit">Search</button>
-    </form>
-    <ul>
+<form method="get">
+    {{ filter.form.as_p }}
+    <button type="submit">Search</button>
+</form>
+<ul>
     {% for quest in filter.qs %}
-        <li>{{ quest.qtext }}</li>
+    <li>{{ quest.qtext }}</li>
     {% endfor %}
-    </ul>
+</ul>
 {% endblock %}

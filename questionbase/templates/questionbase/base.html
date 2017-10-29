@@ -1,54 +1,87 @@
 {% load staticfiles %}
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>QuestionBase</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="{% static 'css/questionbase.css' %}">
-    </head>
-    <body>
+<head>
+    <title>QuestionBase</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap-filestyle.min.js' %}"> </script>
+    <link rel="stylesheet" href="{% static 'css/questionbase.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'ico/favicon.png' %}">
+</head>
+<body>
 
+<header>
+    <nav class="navbar navbar-inverse navbar-default navbar-static-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">DB</a>
+            </div>
 
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="/">DB</a>
-                </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'quest_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <ul class="nav navbar-nav">
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'search' %}" class="top-menu"><span class="glyphicon glyphicon-search"></span></a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+                    <li><p class="navbar-text">Hello {{ user.username }}</p></li>
+                    <li><a href="{% url 'logout' %}">Log out</a></li>
+                    {% else %}
+                    <li><a href="{% url 'login' %}" class="top-menu">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+</header>
 
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        {% if user.is_authenticated %}
-                        <li><a href="{% url 'quest_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a></li>
-                        {% endif %}
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        {% if user.is_authenticated %}
-                        <li><p class="navbar-text">Hello {{ user.username }}</p></li>
-                        <li><a href="{% url 'logout' %}">Log out</a></li>
-                        {% else %}
-                        <li><a href="{% url 'login' %}" class="top-menu">Login</a></li>
-                        {% endif %}
-                    </ul>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
-        </nav>
+<button onclick="topFunction()" id="scrollBtn" class="btn btn-warning btn-lg" title="Go to top"><span
+            class="glyphicon glyphicon-arrow-up"></span></button>
 
+<div class="content container">
+    {% block content %}
+    {% endblock %}
+</div>
 
-        <div class="content container">
-                {% block content %}
-                {% endblock %}
-        </div>
+<script>
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
 
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    document.getElementById("scrollBtn").style.display = "block";
+  } else {
+    document.getElementById("scrollBtn").style.display = "none";
+  }
+}
 
-    </body>
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+
+</script>
+
+</body>
 </html>

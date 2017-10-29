@@ -2,50 +2,50 @@
 
 {% block content %}
 
-    <div class="quest">
-        <a href="{% url 'quest_edit' pk=quest.pk %}" class="top-menu"><span class="glyphicon glyphicon-pencil"></span></a>
-        <p><strong>Вопрос: </strong>{{ quest.qtext|linebreaksbr }}</p>
+<div class="quest">
+    <a href="{% url 'quest_edit' pk=quest.pk %}" class="top-menu"><span class="glyphicon glyphicon-pencil"></span></a>
+    <p><strong>Вопрос: </strong>{{ quest.qtext|linebreaksbr }}</p>
 
-        <ul class="list-inline">
+    <ul class="list-inline">
         {% if quest.qlink1 %}
-            <li><img src="/{{ quest.qlink1 }}" height="150"></li>
+        <li><img src="/{{ quest.qlink1 }}" height="150"></li>
         {% endif %}
         {% if quest.qlink2 %}
-            <li><img src="/{{ quest.qlink2 }}" height="150"></li>
+        <li><img src="/{{ quest.qlink2 }}" height="150"></li>
         {% endif %}
         {% if quest.qlink3 %}
-            <li><img src="/{{ quest.qlink3 }}" height="150"></li>
+        <li><img src="/{{ quest.qlink3 }}" height="150"></li>
         {% endif %}
-        </ul>
+    </ul>
 
-        <p><strong>Ответ: </strong>{{ quest.answer|linebreaksbr }}</p>
+    <p><strong>Ответ: </strong>{{ quest.answer|linebreaksbr }}</p>
 
-        <ul class="list-inline">
+    <ul class="list-inline">
         {% if quest.alink1 %}
-            <li><img src="/{{ quest.alink1 }}" height="150"></li>
+        <li><img src="/{{ quest.alink1 }}" height="150"></li>
         {% endif %}
         {% if quest.alink2 %}
-            <li><img src="/{{ quest.alink2 }}" height="150"></li>
+        <li><img src="/{{ quest.alink2 }}" height="150"></li>
         {% endif %}
         {% if quest.alink3 %}
-            <li><img src="/{{ quest.alink3 }}" height="150"></li>
+        <li><img src="/{{ quest.alink3 }}" height="150"></li>
         {% endif %}
-        </ul>
+    </ul>
 
-        {% if quest.altanswer %}
-            <p><strong>Зачет: </strong>{{ quest.altanswer|linebreaksbr }}</p>
-        {% endif %}
-        <p><strong>Комментарий: </strong>{{ quest.comment|linebreaksbr }}</p>
-        <p><strong>Автор: </strong>{{ quest.author|linebreaksbr }}</p>
-        <p><strong>Источник: </strong>{{ quest.source|linebreaksbr }}</p>
-        {% if quest.is_played %}
-            Игралось!
-        {% endif %}
-        {% if quest.is_bb %}
-            внимание, черный ящик!
-        {% endif %}
+    {% if quest.altanswer %}
+    <p><strong>Зачет: </strong>{{ quest.altanswer|linebreaksbr }}</p>
+    {% endif %}
+    <p><strong>Комментарий: </strong>{{ quest.comment|linebreaksbr }}</p>
+    <p><strong>Автор: </strong>{{ quest.author|linebreaksbr }}</p>
+    <p><strong>Источник: </strong>{{ quest.source|linebreaksbr }}</p>
+    {% if quest.is_played %}
+    Игралось!
+    {% endif %}
+    {% if quest.is_bb %}
+    внимание, черный ящик!
+    {% endif %}
 
-    </div>
+</div>
 
 {% endblock %}
 
