@@ -1,54 +1,47 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
-from django.utils import timezone
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
+from django.utils import timezone
 from .models import Question
 from .forms import QuestForm
 from .filters import QFilter
 
 
 @login_required
-def question_list(request):
-    # If user choose sorting order
-    orderby = request.GET.get('sort', False)
-    if orderby in ['new', 'old', 'np']:
-        request.session['orderby'] = orderby
-    # sort queryset
-    if 'orderby' in request.session:
-        if request.session['orderby'] == 'new':
-            questions = Question.objects.order_by('-created_date')
-        elif request.session['orderby'] == 'old':
-            questions = Question.objects.order_by('created_date')
-        elif request.session['orderby'] == 'np':
-            questions = Question.objects.order_by('is_played', '-created_date')
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            #return redirect('change_password')
+            response = redirect('search')
+            if 'search_query' in request.session:
+                response['Location'] += '?' + request.session['search_query']
+            return response
+        else:
+            messages.error(request, 'Please correct the error below.')
     else:
-        questions = Question.objects.order_by('-created_date')
-    # Paginator parameter
-    q_per_page = int(request.GET.get('cou', False))
-    if q_per_page in [10, 20, 50]:
-        request.session['q_per_page'] = q_per_page
-
-    if 'q_per_page' in request.session:
-        paginator = Paginator(questions, request.session['q_per_page'])
-    else:
-        paginator = Paginator(questions, 10)
-    page = request.GET.get('page')
-    try:
-        questions = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        questions = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        questions = paginator.page(paginator.num_pages)
-    return render(request, 'questionbase/quest_list.html', {'questions': questions})
+        form = PasswordChangeForm(request.user)
+    return render(request, 'accounts/change_password.html', {'form': form})
 
 
 @login_required
-def quest_detail(request, pk):
-    quest = get_object_or_404(Question, pk=pk)
-    return render(request, 'questionbase/quest_detail.html', {'quest': quest})
+def to_full_form(request):
+    response = redirect('search')
+    if 'search_query' in request.session:
+        response['Location'] += '?' + request.session['search_query']
+    return response
+
+
+@login_required
+def to_empty_form(request):
+    request.session['search_query'] = ''
+    return redirect('search')
 
 
 @login_required
@@ -58,6 +51,12 @@ def quest_new(request):
         if form.is_valid():
             quest = form.save(commit=False)
             quest.qtextlower = quest.qtext.lower()
+            quest.answerlower = quest.answer.lower()
+            quest.commentlower = quest.comment.lower()
+            quest.q_has_media = quest.has_media()
+            quest.q_has_img = quest.has_img()
+            quest.q_has_video = quest.has_video()
+            quest.q_has_audio = quest.has_audio()
             quest.created_date = timezone.now()
             quest.save()
             if 'submit_new' in request.POST:
@@ -65,7 +64,11 @@ def quest_new(request):
             elif 'submit_edit' in request.POST:
                 return redirect('quest_edit', pk=quest.pk)
             else:
-                return redirect('quest_list')
+                #return redirect('search')
+                response = redirect('search')
+                if 'search_query' in request.session:
+                    response['Location'] += '?' + request.session['search_query']
+                return response
     else:
         form = QuestForm(request.POST)
     return render(request, 'questionbase/quest_edit.html', {'form': form})
@@ -81,6 +84,10 @@ def quest_edit(request, pk):
             quest.qtextlower = quest.qtext.lower()
             quest.answerlower = quest.answer.lower()
             quest.commentlower = quest.comment.lower()
+            quest.q_has_media = quest.has_media()
+            quest.q_has_img = quest.has_img()
+            quest.q_has_video = quest.has_video()
+            quest.q_has_audio = quest.has_audio()
             quest.created_date = timezone.now()
             quest.save()
             if 'submit_new' in request.POST:
@@ -88,7 +95,11 @@ def quest_edit(request, pk):
             elif 'submit_edit' in request.POST:
                 return redirect('quest_edit', pk=quest.pk)
             else:
-                return redirect('quest_list')
+                #return redirect('search')
+                response = redirect('search')
+                if 'search_query' in request.session:
+                    response['Location'] += '?' + request.session['search_query']
+                return response
     else:
         form = QuestForm(instance=quest)
     return render(request, 'questionbase/quest_edit.html', {'form': form})
@@ -96,13 +107,46 @@ def quest_edit(request, pk):
 
 @login_required
 def search(request):
-    quest_search = Question.objects.all()
-    quest_filter = QFilter(request.GET, queryset=quest_search)
-    return render(request, 'questionbase/quest_search.html', {'filter': quest_filter})
+    quest_filter = QFilter(request.GET, queryset=Question.objects.all())
+    questions = quest_filter.qs
+
+    if 'find-btn' in request.GET:
+        request_dict = dict(request.GET)
+        del request_dict['find-btn']
+        request_dict_url = ''
+        for key, value in request_dict.items():
+            request_dict_url = request_dict_url + '&' + str(key) + '=' + str(value)[2:-2]
+        request.session['search_query'] = request_dict_url
+    if 'cancel-btn' in request.GET:
+        request.session['search_query'] = ''
+    # Paginator parameter
+    q_per_page = int(request.GET.get('cou', False))
+    if q_per_page in [1, 10, 20, 50]:
+        request.session['q_per_page'] = q_per_page
+
+    if 'q_per_page' in request.session:
+        paginator = Paginator(questions, request.session['q_per_page'])
+    else:
+        paginator = Paginator(questions, 10)
+    page = request.GET.get('page')
+    try:
+        questions = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        questions = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        questions = paginator.page(paginator.num_pages)
+
+    return render(request, 'questionbase/quest_search.html', {'filter': quest_filter, 'questions': questions})
 
 
 @login_required
 def quest_remove(request, pk):
     quest = get_object_or_404(Question, pk=pk)
     quest.delete()
-    return redirect('quest_list')
+    #return redirect('search')
+    response = redirect('search')
+    if 'search_query' in request.session:
+        response['Location'] += '?' + request.session['search_query']
+    return response

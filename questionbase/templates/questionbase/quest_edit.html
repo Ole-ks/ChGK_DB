@@ -22,7 +22,7 @@
             </div>
         </div>
         {% endfor %}
-        <div class="row">
+        <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
             <div class="pull-left margin10">
                 <button type="submit" name="submit_new" class="btn btn-primary ">Сохранить и добавить новый вопрос</button>
             </div>
@@ -33,7 +33,7 @@
                 <button type="submit" name="submit_exit" class="btn btn-primary ">Сохранить</button>
             </div>
             <div class="pull-left margin10">
-                <a href="{% url 'quest_list' %}"><span class="btn btn-default">Отменить</span></a>
+                <a href="{% url 'to_full_form' %}"><span class="btn btn-default">Отменить</span></a>
             </div>
         </div>
 

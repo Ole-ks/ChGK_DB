@@ -25,7 +25,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">DB</a>
+                <a class="navbar-brand" href="{% url 'to_empty_form' %}"><span class="glyphicon glyphicon-search"></span></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -36,19 +36,16 @@
                     </li>
                     {% endif %}
                 </ul>
-                <ul class="nav navbar-nav">
-                    {% if user.is_authenticated %}
-                    <li><a href="{% url 'search' %}" class="top-menu"><span class="glyphicon glyphicon-search"></span></a>
-                    </li>
-                    {% endif %}
-                </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    {% if user.is_authenticated %}
-                    <li><p class="navbar-text">Hello {{ user.username }}</p></li>
-                    <li><a href="{% url 'logout' %}">Log out</a></li>
-                    {% else %}
-                    <li><a href="{% url 'login' %}" class="top-menu">Login</a></li>
-                    {% endif %}
+                    <li role="presentation" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            Hello {{ user.username }} <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu ">
+                            <li><a href="{% url 'change_password' %}"><span class="">сменить пароль</span></a></li>
+                            <li><a href="{% url 'logout' %}">выйти</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->

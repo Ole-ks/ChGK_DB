@@ -5,36 +5,34 @@
         <p>Your username and password didn't match. Please try again.</p>
     {% endif %}
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <table class="table noborder">
-                    <form method="POST" class="post-form" action="{% url 'login' %}">
-                        {% csrf_token %}
-                        <tr>
-
-                        <tr>
-                            <div class="form-group">
-                                <td>{{ form.username.label_tag }}</td>
-                                <td>{{ form.username }}</td>
-                            </div>
-                        </tr>
-                        <tr>
-                            <div class="form-group">
-                                <td>{{ form.password.label_tag }}</td>
-                                <td>{{ form.password }}</td>
-                            </div>
-                        </tr>
-
-                        <tfoot><th colspan="2">
-                            <button type="submit" class="btn btn-primary fullwidth">login</button>
-                            <input type="hidden" name="next" value="{{ next }}" />
-                        </th></tfoot>
-                    </form>
-                </table>
+    <div class="col-xs-12 col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form method="POST" class="post-form" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-xs-4 col-md-4" style="margin-top: 1px; margin-bottom: 1px;">
+                            {{ form.username.label_tag }}
+                        </div>
+                        <div class="col-xs-2 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">
+                            {{ form.username }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4 col-md-4" style="margin-top: 1px; margin-bottom: 1px;">
+                            {{ form.password.label_tag }}
+                        </div>
+                        <div class="col-xs-2 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">
+                            {{ form.password }}
+                        </div>
+                    </div>
+                    <div class="row"style="margin-top: 10px; margin-bottom: 1px;margin-left: 15px;margin-right: 15px;">
+                        <button type="submit" class="btn btn-primary fullwidth">login</button>
+                        <input type="hidden" name="next" value="{{ next }}" />
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-
 
 {% endblock %}
