@@ -75,8 +75,10 @@
                 </div>
 
                 <div class="row" style="margin-top: 10px;">
-                    <button type="submit" name="find-btn" class="btn btn-primary" style="margin-left: 15px; margin-right: 15px;">Поиск</button>
-                    <a href="{% url 'search' %}?cancel-btn=" ><span class="btn btn-default">Очистить поиск</span></a>
+                    <div class="pull-left margin10">
+                        <button type="submit" name="find-btn" class="btn btn-primary">Поиск</button>
+                        <a href="{% url 'search' %}?cancel-btn=" ><span class="btn btn-default">Очистить поиск</span></a>
+                    </div>
                     <div class="pull-right margin10">
                         <div class="btn-group">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -103,7 +105,6 @@
 
     <div class="panel panel-default">
         <div class="panel-body">
-
             {% if quest.q_has_img %}
             <span class="glyphicon glyphicon-picture"></span>
             {% endif %}
@@ -138,7 +139,7 @@
                 {% endif %}
                 {% if type == 'video' %}
                 <li>
-                    <video src="/{{ link }}" width="420" controls alt="упс, видео потерялось"></video>
+                    <video src="/{{ link }}" height="200" controls alt="упс, видео потерялось"></video>
                 </li>
                 {% endif %}
                 {% if type == 'audio' %}
@@ -169,7 +170,7 @@
                 {% endif %}
                 {% if type == 'video' %}
                 <li>
-                    <video src="/{{ link }}" width="420" controls alt="упс, видео потерялось"></video>
+                    <video src="/{{ link }}" height="200" controls alt="упс, видео потерялось"></video>
                 </li>
                 {% endif %}
                 {% if type == 'audio' %}
@@ -200,12 +201,12 @@
 
             <div class="row">
                 <div class="pull-left margin10">
-                    <a href="#qmore{{ quest.pk }}" data-toggle="collapse"><span class="btn btn btn-default margin10">подробнее <span class="caret"></span></span></a>
-                    <a href="{% url 'quest_edit' pk=quest.pk %}"><span class="btn btn btn-default margin10">редактировать</span></a>
+                    <a href="#qmore{{ quest.pk }}" data-toggle="collapse"><span class="btn btn btn-default">подробнее <span class="caret"></span></span></a>
+                    <a href="{% url 'quest_edit' pk=quest.pk %}"><span class="btn btn btn-default">редактировать</span></a>
                 </div>
                 <div class="pull-right margin10">
                     <a href="{% url 'quest_remove' pk=quest.pk %}" class="delete" data-confirm="Уверены, что хотите удалить этот вопрос?">
-                        <span class="btn btn btn-danger margin10">Удалить</span></a>
+                        <span class="btn btn btn-danger">Удалить</span></a>
                 </div>
             </div>
         </div><!-- panel-body-->

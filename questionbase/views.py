@@ -88,7 +88,6 @@ def quest_edit(request, pk):
             quest.q_has_img = quest.has_img()
             quest.q_has_video = quest.has_video()
             quest.q_has_audio = quest.has_audio()
-            quest.created_date = timezone.now()
             quest.save()
             if 'submit_new' in request.POST:
                 return redirect('quest_new')
@@ -107,7 +106,7 @@ def quest_edit(request, pk):
 
 @login_required
 def search(request):
-    quest_filter = QFilter(request.GET, queryset=Question.objects.all())
+    quest_filter = QFilter(request.GET, queryset=Question.objects.filter(is_deleted=False))
     questions = quest_filter.qs
 
     if 'find-btn' in request.GET:
@@ -144,9 +143,41 @@ def search(request):
 @login_required
 def quest_remove(request, pk):
     quest = get_object_or_404(Question, pk=pk)
-    quest.delete()
+    quest.is_deleted = True
+    quest.save()
     #return redirect('search')
     response = redirect('search')
     if 'search_query' in request.session:
         response['Location'] += '?' + request.session['search_query']
     return response
+
+
+@login_required
+def quest_restore(request, pk):
+    quest = get_object_or_404(Question, pk=pk)
+    quest.is_deleted = False
+    quest.save()
+    #return redirect('search')
+    response = redirect('search')
+    if 'search_query' in request.session:
+        response['Location'] += '?' + request.session['search_query']
+    return response
+
+
+@login_required
+def delete_forever(request, pk):
+    quest = get_object_or_404(Question, pk=pk)
+    for file in [quest.qlink1, quest.qlink2, quest.qlink3, quest.alink1, quest.alink2, quest.alink3]:
+        try:
+            file.delete()
+            quest.save()
+        except:
+            print('-------something went wrong++++++++++++++++++++++++++++++++++++++++++++')
+    quest.delete()
+    return redirect('deleted')
+
+
+@login_required
+def deleted(request):
+    questions = Question.objects.filter(is_deleted=True).order_by('-created_date')
+    return render(request, 'questionbase/deleted.html', {'questions': questions})

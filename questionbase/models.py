@@ -34,6 +34,7 @@ class Question(models.Model):
         ),
         default='-',
     )
+    is_deleted = models.BooleanField(default=False, verbose_name='Вопрос удален')
 
     def has_media(self):
         for link in [self.qlink1, self.qlink2, self.qlink3, self.alink1, self.alink2, self.alink3]:
