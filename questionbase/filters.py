@@ -43,9 +43,9 @@ class QFilter(django_filters.FilterSet):
     q_has_media = filters.ChoiceFilter(label='Есть медиа',widget=forms.Select(attrs={'class': 'btn btn-default btn-sm dropdown-toggle'}),
                                       choices=((True, 'есть'),(False, 'нет')))
     is_played = filters.ChoiceFilter(widget=forms.Select(attrs={'class': 'btn btn-default btn-sm dropdown-toggle'}),
-                                     choices=((True, 'есть'),(False, 'нет')))
+                                     choices=((True, 'да'),(False, 'нет')))
     is_bb = filters.ChoiceFilter(widget=forms.Select(attrs={'class': 'btn btn-default btn-sm dropdown-toggle'}),
-                                 choices=((True, 'есть'), (False, 'нет')))
+                                 choices=((True, 'да'), (False, 'нет')))
     wow = filters.ChoiceFilter(widget=forms.Select(attrs={'class': 'btn btn-sm btn-default dropdown-toggle'}),
                                choices=(('WOW', 'WOW'),('-', 'не указано'),('FOO', 'FOO')))
     o = filters.OrderingFilter(

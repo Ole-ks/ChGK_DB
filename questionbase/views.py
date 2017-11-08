@@ -180,4 +180,14 @@ def delete_forever(request, pk):
 @login_required
 def deleted(request):
     questions = Question.objects.filter(is_deleted=True).order_by('-created_date')
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(questions, 5)
+    try:
+        questions = paginator.page(page)
+    except PageNotAnInteger:
+        questions = paginator.page(1)
+    except EmptyPage:
+        questions = paginator.page(paginator.num_pages)
+
     return render(request, 'questionbase/deleted.html', {'questions': questions})
