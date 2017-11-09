@@ -1,0 +1,8 @@
+django-filter
+lxml
+python-dateutil
+python-decouple
+python-docx
+pytz
+six
+urllib3
