@@ -65,6 +65,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -123,11 +124,14 @@ LOGIN_REDIRECT_URL = '/'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'website', 'static')
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'questionbase', 'static'),
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
-MEDIA_URL = '/questionbase/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'questionbase')
+
+
+STATIC_URL = '/static/' #URL to use when referring to static files located in STATIC_ROOT.
+STATIC_ROOT = os.path.join(BASE_DIR, 'static') #The absolute path to the directory where collectstatic will collect static files for deployment.
+
+MEDIA_URL = '/media/' #URL that handles the media served from MEDIA_ROOT, used for managing stored files.
+MEDIA_ROOT = os.path.join(BASE_DIR, 'questionbase', 'media') #Absolute filesystem path to the directory that will hold user-uploaded files.
