@@ -1,6 +1,7 @@
 {% extends 'questionbase/base.html' %}
 {% block content %}
 
+{% if user.username != 'view' %}
 <div class="infinite-container">
 {% for quest in questions %}
     <div class="infinite-item">
@@ -19,24 +20,24 @@
                         {% for link, type, i in quest.ext_q_list %}
                         {% if type == 'img' %}
                         <li><a href="#" data-toggle="modal" data-target=".bs-qimg{{i}}{{ quest.pk }}-modal-lg">
-                            <img src="/{{ link }}" class="img-thumbnail" style="height: 150px;" alt="упс, картинка потерялась"></a>
+                            <img src="{{ MEDIA_URL }}{{ link }}" class="img-thumbnail" style="height: 150px;" alt="упс, картинка потерялась"></a>
                         </li>
                         <div class="modal fade bs-qimg{{i}}{{ quest.pk }}-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
                             <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
-                                    <img src="/{{ link }}" class="responsive-img" alt="упс, картинка потерялась">
+                                    <img src="{{ MEDIA_URL }}{{ link }}" class="responsive-img" alt="упс, картинка потерялась">
                                 </div>
                             </div>
                         </div>
                         {% endif %}
                         {% if type == 'video' %}
                         <li>
-                            <video src="/{{ link }}" height="200" controls alt="упс, видео потерялось"></video>
+                            <video src="{{ MEDIA_URL }}{{ link }}" height="200" controls alt="упс, видео потерялось"></video>
                         </li>
                         {% endif %}
                         {% if type == 'audio' %}
                         <li>
-                            <audio src="/{{ link }}" controls alt="упс, музыка потерялось"></audio>
+                            <audio src="{{ MEDIA_URL }}{{ link }}" controls alt="упс, музыка потерялось"></audio>
                         </li>
                         {% endif %}
                         {% if type == 'other' %}
@@ -50,24 +51,24 @@
                         {% for link, type, i in quest.ext_a_list %}
                         {% if type == 'img' %}
                         <li><a href="#" data-toggle="modal" data-target=".bs-aimg{{i}}{{ quest.pk }}-modal-lg">
-                            <img src="/{{ link }}" class="img-thumbnail" style="height: 150px;" alt="упс, картинка потерялась"></a>
+                            <img src="{{ MEDIA_URL }}{{ link }}" class="img-thumbnail" style="height: 150px;" alt="упс, картинка потерялась"></a>
                         </li>
                         <div class="modal fade bs-aimg{{i}}{{ quest.pk }}-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
                             <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
-                                    <img src="/{{ link }}" class="responsive-img" alt="упс, картинка потерялась">
+                                    <img src="{{ MEDIA_URL }}{{ link }}" class="responsive-img" alt="упс, картинка потерялась">
                                 </div>
                             </div>
                         </div>
                         {% endif %}
                         {% if type == 'video' %}
                         <li>
-                            <video src="/{{ link }}" height="200" controls alt="упс, видео потерялось"></video>
+                            <video src="{{ MEDIA_URL }}{{ link }}" height="200" controls alt="упс, видео потерялось"></video>
                         </li>
                         {% endif %}
                         {% if type == 'audio' %}
                         <li>
-                            <audio src="/{{ link }}" controls alt="упс, музыка потерялось"></audio>
+                            <audio src="{{ MEDIA_URL }}{{ link }}" controls alt="упс, музыка потерялось"></audio>
                         </li>
                         {% endif %}
                         {% if type == 'other' %}
@@ -147,5 +148,6 @@ for (var i = 0; i < deleteLinks.length; i++) {
   });
 }
 </script>
+{% endif %}
 
 {% endblock %}

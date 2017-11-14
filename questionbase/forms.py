@@ -32,7 +32,7 @@ class QuestForm(forms.ModelForm):
             'alink3': forms.ClearableFileInput(attrs={'class': 'filestyle', 'data-icon': 'false', 'data-buttonBefore': 'true', 'data-size': 'sm'}),
             'comment': forms.Textarea(attrs={'class': 'form-control', 'rows': '2'}),
             'author': forms.TextInput(attrs={'class': 'form-control'}),
-            'source': forms.TextInput(attrs={'class': 'form-control'}),
+            'source': forms.Textarea(attrs={'class': 'form-control', 'rows': '1'}),
             'is_played': forms.CheckboxInput(attrs={'class': 'checkbox', 'style': 'width: 30px'}),
             'is_bb': forms.CheckboxInput(attrs={'class': 'checkbox', 'style': 'width: 30px'}),
             'wow': forms.Select(attrs={'class': 'btn btn-default btn-sm dropdown-toggle'})

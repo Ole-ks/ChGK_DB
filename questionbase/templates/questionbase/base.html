@@ -33,13 +33,13 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    {% if user.is_authenticated %}
+                    {% if user.username != 'view' %}
                     <li><a href="{% url 'quest_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
                     </li>
                     {% endif %}
                 </ul>
                 <ul class="nav navbar-nav">
-                    {% if user.is_authenticated %}
+                    {% if user.username != 'view' %}
                     <li><a href="{% url 'deleted' %}" class="top-menu"><span class="glyphicon glyphicon-trash"></span></a>
                     </li>
                     {% endif %}

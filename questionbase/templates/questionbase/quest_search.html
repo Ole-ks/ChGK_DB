@@ -105,6 +105,9 @@
 
     <div class="panel panel-default">
         <div class="panel-body">
+            {% if quest.is_bb %}
+            <span class="glyphicon glyphicon-folder-close"></span>
+            {% endif %}
             {% if quest.q_has_img %}
             <span class="glyphicon glyphicon-picture"></span>
             {% endif %}
@@ -194,20 +197,22 @@
                 {% if quest.is_played %}
                 <p>Игралось!</p>
                 {% endif %}
-                {% if quest.is_bb %}
-                <p>Черный ящик!</p>
-                {% endif %}
+
             </div>
 
             <div class="row">
                 <div class="pull-left margin10">
                     <a href="#qmore{{ quest.pk }}" data-toggle="collapse"><span class="btn btn btn-default">подробнее <span class="caret"></span></span></a>
+                    {% if user.username != 'view' %}
                     <a href="{% url 'quest_edit' pk=quest.pk %}"><span class="btn btn btn-default">редактировать</span></a>
+                    {% endif %}
                 </div>
+                {% if user.username != 'view' %}
                 <div class="pull-right margin10">
                     <a href="{% url 'quest_remove' pk=quest.pk %}" class="delete" data-confirm="Уверены, что хотите удалить этот вопрос?">
                         <span class="btn btn btn-danger">Удалить</span></a>
                 </div>
+                {% endif %}
             </div>
         </div><!-- panel-body-->
     </div><!-- panel-default or panel-primary-->

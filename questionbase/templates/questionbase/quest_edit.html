@@ -1,6 +1,8 @@
 {% extends 'questionbase/base.html' %}
 
 {% block content %}
+
+{% if user.username != 'view' %}
 <div class="container">
 
     <form method="POST" class="post-form" enctype="multipart/form-data">
@@ -33,4 +35,6 @@
 
     </form>
 </div>
+{% endif %}
+
 {% endblock %}
