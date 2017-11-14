@@ -4,12 +4,9 @@ from django.utils import timezone
 
 class Question(models.Model):
     qtext = models.TextField(verbose_name='Вопрос')
-    qtextlower = models.TextField(blank=True, verbose_name='Вопрос')
     answer = models.CharField(max_length=500, verbose_name='Ответ')
-    answerlower = models.CharField(max_length=500, blank=True, verbose_name='Ответ')
     altanswer = models.CharField(max_length=500, blank=True, verbose_name='Зачет')
     comment = models.TextField(blank=True, verbose_name='Комментарий')
-    commentlower = models.TextField(blank=True, verbose_name='Комментарий')
     author = models.CharField(max_length=500, verbose_name='Автор')
     source = models.CharField(max_length=2000, blank=True, verbose_name='Источник')
     created_date = models.DateTimeField(default=timezone.now, verbose_name='Дата добавления')

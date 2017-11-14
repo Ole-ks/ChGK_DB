@@ -18,11 +18,7 @@ def change_password(request):
             user = form.save()
             update_session_auth_hash(request, user)  # Important!
             messages.success(request, 'Your password was successfully updated!')
-            #return redirect('change_password')
-            response = redirect('search')
-            if 'search_query' in request.session:
-                response['Location'] += '?' + request.session['search_query']
-            return response
+            return redirect('search')
         else:
             messages.error(request, 'Please correct the error below.')
     else:
@@ -31,28 +27,11 @@ def change_password(request):
 
 
 @login_required
-def to_full_form(request):
-    response = redirect('search')
-    if 'search_query' in request.session:
-        response['Location'] += '?' + request.session['search_query']
-    return response
-
-
-@login_required
-def to_empty_form(request):
-    request.session['search_query'] = ''
-    return redirect('search')
-
-
-@login_required
 def quest_new(request):
     if request.method == 'POST':
         form = QuestForm(request.POST, request.FILES)
         if form.is_valid():
             quest = form.save(commit=False)
-            quest.qtextlower = quest.qtext.lower()
-            quest.answerlower = quest.answer.lower()
-            quest.commentlower = quest.comment.lower()
             quest.q_has_media = quest.has_media()
             quest.q_has_img = quest.has_img()
             quest.q_has_video = quest.has_video()
@@ -64,11 +43,7 @@ def quest_new(request):
             elif 'submit_edit' in request.POST:
                 return redirect('quest_edit', pk=quest.pk)
             else:
-                #return redirect('search')
-                response = redirect('search')
-                if 'search_query' in request.session:
-                    response['Location'] += '?' + request.session['search_query']
-                return response
+                return redirect('search')
     else:
         form = QuestForm(request.POST)
     return render(request, 'questionbase/quest_edit.html', {'form': form})
@@ -81,9 +56,6 @@ def quest_edit(request, pk):
         form = QuestForm(request.POST, request.FILES, instance=quest)
         if form.is_valid():
             quest = form.save(commit=False)
-            quest.qtextlower = quest.qtext.lower()
-            quest.answerlower = quest.answer.lower()
-            quest.commentlower = quest.comment.lower()
             quest.q_has_media = quest.has_media()
             quest.q_has_img = quest.has_img()
             quest.q_has_video = quest.has_video()
@@ -94,11 +66,7 @@ def quest_edit(request, pk):
             elif 'submit_edit' in request.POST:
                 return redirect('quest_edit', pk=quest.pk)
             else:
-                #return redirect('search')
-                response = redirect('search')
-                if 'search_query' in request.session:
-                    response['Location'] += '?' + request.session['search_query']
-                return response
+                return redirect('search')
     else:
         form = QuestForm(instance=quest)
     return render(request, 'questionbase/quest_edit.html', {'form': form})
@@ -145,11 +113,7 @@ def quest_remove(request, pk):
     quest = get_object_or_404(Question, pk=pk)
     quest.is_deleted = True
     quest.save()
-    #return redirect('search')
-    response = redirect('search')
-    if 'search_query' in request.session:
-        response['Location'] += '?' + request.session['search_query']
-    return response
+    return redirect('search')
 
 
 @login_required
@@ -157,11 +121,7 @@ def quest_restore(request, pk):
     quest = get_object_or_404(Question, pk=pk)
     quest.is_deleted = False
     quest.save()
-    #return redirect('search')
-    response = redirect('search')
-    if 'search_query' in request.session:
-        response['Location'] += '?' + request.session['search_query']
-    return response
+    return redirect('search')
 
 
 @login_required

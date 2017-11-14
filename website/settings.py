@@ -84,6 +84,17 @@ DATABASES = {
     }
 }
 
+
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'django',
+#        'HOST': '127.0.0.1',
+#        'USER': 'django',
+#        'PASSWORD': 'ooj8ioXiMaim',
+#    }
+#}
+
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
 # Password validation
@@ -104,6 +115,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+DEFAULT_FILE_STORAGE = 'storage.ASCIIFileSystemStorage'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/

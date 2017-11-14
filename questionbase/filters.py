@@ -27,7 +27,7 @@ class MultiFieldSearchFilter(filters.Filter):
 class QFilter(django_filters.FilterSet):
 
     search = MultiFieldSearchFilter(
-        name=['qtextlower', 'answerlower', 'commentlower'],
+        name=['qtext', 'answer', 'comment'],
         lookup_expr='icontains',
         label='Искать',
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'поиск по вопросу, ответу или комментарию'}))
@@ -55,5 +55,4 @@ class QFilter(django_filters.FilterSet):
     )
     class Meta:
         model = Question
-        exclude = ['qtext', 'qtextlower', 'answer', 'answerlower', 'altanswer', 'comment', 'commentlower',
-                   'source', 'created_date', 'qlink1', 'qlink2', 'qlink3', 'alink1', 'alink2', 'alink3']
+        exclude = ['qtext', 'answer', 'altanswer', 'comment', 'source', 'created_date', 'qlink1', 'qlink2', 'qlink3', 'alink1', 'alink2', 'alink3']

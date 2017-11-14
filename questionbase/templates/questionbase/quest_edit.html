@@ -27,7 +27,7 @@
                 <button type="submit" name="submit_new" class="btn btn-primary ">Сохранить и добавить новый вопрос</button>
                 <button type="submit" name="submit_edit" class="btn btn-primary ">Сохранить и продолжить редактирование</button>
                 <button type="submit" name="submit_exit" class="btn btn-primary ">Сохранить</button>
-                <a href="{% url 'to_full_form' %}"><span class="btn btn-default">Отменить</span></a>
+                <a href="{% url 'search' %}?{{ request.session.search_query }}"><span class="btn btn-default">Отменить</span></a>
             </div>
         </div>
 
