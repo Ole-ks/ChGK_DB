@@ -28,6 +28,12 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="{% url 'search' %}"><span class="glyphicon glyphicon-search"></span></a>
+                {% if request.session.with_answers == 'True' %}
+                <a class="navbar-brand" href="{% url 'search_n_a' %}"><span >Спрятать ответы</span></a>
+                {% else %}
+                <a class="navbar-brand" href="{% url 'search_w_a' %}"><span >Показать ответы</span></a>
+                {% endif %}
+
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -87,6 +93,7 @@ function topFunction() {
 }
 
 </script>
+
 
 </body>
 </html>

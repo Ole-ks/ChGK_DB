@@ -1,75 +1,83 @@
 {% extends 'questionbase/base.html' %}
 
 {% block content %}
-<div class="col-xs-12 col-md-8">
+<div class="col-xs-12 col-sm-12 col-md-9">
     <div class="panel panel-default">
         <div class="panel-body">
 
             <form method="get">
 
                 <div class="row">
-                    <div style="margin-left: 15px; margin-right: 15px; margin-top: 1px; margin-bottom: 1px;">
+                    <div style="margin-left: 10px; margin-right: 10px; margin-top: 1px; margin-bottom: 1px;">
                         {{ filter.form.search }}
                     </div>
                 </div>
                 <div class="row">
-                    <div style="margin-left: 15px; margin-right: 15px; margin-top: 1px; margin-bottom: 1px;">
+                    <div style="margin-left: 10px; margin-right: 10px; margin-top: 1px; margin-bottom: 1px;">
                         {{ filter.form.author }}
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-2 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">
-                        {{ filter.form.q_has_img.label_tag }}
+                    <div class="col-xs-4 col-md-3" style="margin-top: 1px; margin-bottom: 1px;">
+                        <span class="glyphicon glyphicon-picture"></span> {{ filter.form.q_has_img.label_tag }}
                     </div>
-                    <div class="col-xs-3 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">
+                    <div class="col-xs-6 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">
                         {{ filter.form.q_has_img }}
                     </div>
-                    <div class="col-xs-2 col-md-2 col-md-offset-1" style="margin-top: 1px; margin-bottom: 1px;">
-                        {{ filter.form.q_has_video.label_tag }}
+                    <div class="col-xs-4 col-md-3 col-md-offset-1" style="margin-top: 1px; margin-bottom: 1px;">
+                        <span class="glyphicon glyphicon-facetime-video"></span> {{ filter.form.q_has_video.label_tag }}
                     </div>
-                    <div class="col-xs-3 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">
+                    <div class="col-xs-6 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">
                         {{ filter.form.q_has_video }}
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-2 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">
-                        {{ filter.form.q_has_audio.label_tag }}
+                    <div class="col-xs-4 col-md-3" style="margin-top: 1px; margin-bottom: 1px;">
+                        <span class="glyphicon glyphicon-volume-up"></span> {{ filter.form.q_has_audio.label_tag }}
                     </div>
-                    <div class="col-xs-3 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">
+                    <div class="col-xs-6 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">
                         {{ filter.form.q_has_audio }}
                     </div>
-                    <div class="col-xs-2 col-md-2 col-md-offset-1" style="margin-top: 1px; margin-bottom: 1px;">
+                    <div class="col-xs-4 col-md-3 col-md-offset-1" style="margin-top: 1px; margin-bottom: 1px;">
                         {{ filter.form.q_has_media.label_tag }}
                     </div>
-                    <div class="col-xs-3 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">
+                    <div class="col-xs-6 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">
                         {{ filter.form.q_has_media }}
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-2 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">
+                    <div class="col-xs-4 col-md-3" style="margin-top: 1px; margin-bottom: 1px;">
                         {{ filter.form.is_played.label_tag }}
                     </div>
-                    <div class="col-xs-3 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">
+                    <div class="col-xs-6 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">
                         {{ filter.form.is_played }}
                     </div>
-                    <div class="col-xs-2 col-md-2 col-md-offset-1" style="margin-top: 1px; margin-bottom: 1px;">
-                        {{ filter.form.is_bb.label_tag }}
+                    <div class="col-xs-4 col-md-3 col-md-offset-1" style="margin-top: 1px; margin-bottom: 1px;">
+                        <span class="glyphicon glyphicon-folder-close"></span> {{ filter.form.is_bb.label_tag }}
                     </div>
-                    <div class="col-xs-3 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">
+                    <div class="col-xs-6 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">
                         {{ filter.form.is_bb }}
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-2 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">
+                    <div class="col-xs-4 col-md-3" style="margin-top: 1px; margin-bottom: 1px;">
                         {{ filter.form.wow.label_tag }}
                     </div>
-                    <div class="col-xs-3 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">
+                    <div class="col-xs-6 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">
                         {{ filter.form.wow }}
                     </div>
-                    <div class="col-xs-2 col-md-2 col-md-offset-1" style="margin-top: 1px; margin-bottom: 1px;">
+                    <div class="col-xs-4 col-md-3 col-md-offset-1" style="margin-top: 1px; margin-bottom: 1px;">
+                        {{ filter.form.qtype.label_tag }}
+                    </div>
+                    <div class="col-xs-6 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">
+                        {{ filter.form.qtype }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 col-md-3" style="margin-top: 1px; margin-bottom: 1px;">
                         {{ filter.form.o.label_tag }}
                     </div>
-                    <div class="col-xs-3 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">
+                    <div class="col-xs-6 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">
                         {{ filter.form.o }}
                     </div>
                 </div>
@@ -103,8 +111,15 @@
     </div>
     {% for quest in questions %}
 
+
+    {% if quest.is_played %}
+    <div class="panel panel-info">
+        <div class="panel-heading">
+    {% else %}
     <div class="panel panel-default">
         <div class="panel-body">
+    {% endif %}
+
             {% if quest.is_bb %}
             <span class="glyphicon glyphicon-folder-close"></span>
             {% endif %}
@@ -156,6 +171,7 @@
                 {% endfor %}
             </ul>
 
+            {% if request.session.with_answers == 'True' %}
             <p><strong>Ответ: </strong>{{ quest.answer|linebreaksbr }}</p>
             <ul class="no-marker">
                 {% for link, type, i in quest.ext_a_list %}
@@ -186,23 +202,66 @@
                 {% endif %}
                 {% endfor %}
             </ul>
-
-            <div id="qmore{{ quest.pk }}" class="collapse">
+            <div id="qmore1{{ quest.pk }}" class="collapse">
                 {% if quest.altanswer %}
                 <p><strong>Зачет: </strong>{{ quest.altanswer|linebreaksbr }}</p>
                 {% endif %}
                 <p><strong>Комментарий: </strong>{{ quest.comment|linebreaksbr }}</p>
                 <p><strong>Автор: </strong>{{ quest.author|linebreaksbr }}</p>
-                <p><strong>Источник: </strong>{{ quest.source|linebreaksbr }}</p>
-                {% if quest.is_played %}
-                <p>Игралось!</p>
-                {% endif %}
-
+                <p><strong>Источник: </strong>{{ quest.source|linebreaksbr|urlize }}</p>
             </div>
+            {% else %}
+            <div id="qmore2{{ quest.pk }}" class="collapse">
+
+                <p><strong>Ответ: </strong>{{ quest.answer|linebreaksbr }}</p>
+                <ul class="no-marker">
+                    {% for link, type, i in quest.ext_a_list %}
+                    {% if type == 'img' %}
+                    <li><a href="#" data-toggle="modal" data-target=".bs-aimg{{i}}{{ quest.pk }}-modal-lg">
+                        <img src="{{ MEDIA_URL }}{{ link }}" class="img-thumbnail" style="height: 150px;" alt="упс, картинка потерялась"></a>
+                    </li>
+                    <div class="modal fade bs-aimg{{i}}{{ quest.pk }}-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <img src="{{ MEDIA_URL }}{{ link }}" class="responsive-img" alt="упс, картинка потерялась">
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if type == 'video' %}
+                    <li>
+                        <video src="{{ MEDIA_URL }}{{ link }}" height="200" controls alt="упс, видео потерялось"></video>
+                    </li>
+                    {% endif %}
+                    {% if type == 'audio' %}
+                    <li>
+                        <audio src="{{ MEDIA_URL }}{{ link }}" controls alt="упс, музыка потерялось"></audio>
+                    </li>
+                    {% endif %}
+                    {% if type == 'other' %}
+                    <li><span class="glyphicon glyphicon-paperclip"></span> {{ link }}</li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+                {% if quest.altanswer %}
+                <p><strong>Зачет: </strong>{{ quest.altanswer|linebreaksbr }}</p>
+                {% endif %}
+                <p><strong>Комментарий: </strong>{{ quest.comment|linebreaksbr }}</p>
+                <p><strong>Автор: </strong>{{ quest.author|linebreaksbr }}</p>
+                <p><strong>Источник: </strong>{{ quest.source|linebreaksbr|urlize }}</p>
+            </div>
+            {% endif %}
 
             <div class="row">
                 <div class="pull-left margin10">
-                    <a href="#qmore{{ quest.pk }}" data-toggle="collapse"><span class="btn btn btn-default">подробнее <span class="caret"></span></span></a>
+
+
+                    {% if request.session.with_answers == 'True' %}
+                    <a href="#qmore1{{ quest.pk }}" data-toggle="collapse"><span class="btn btn btn-default">подробнее <span class="caret"></span></span></a>
+                    {% else %}
+                    <a href="#qmore2{{ quest.pk }}" data-toggle="collapse"><span class="btn btn btn-default">подробнее <span class="caret"></span></span></a>
+                    {% endif %}
+
                     {% if user.username != 'view' %}
                     <a href="{% url 'quest_edit' pk=quest.pk %}"><span class="btn btn btn-default">редактировать</span></a>
                     {% endif %}

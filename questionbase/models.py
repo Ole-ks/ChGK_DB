@@ -31,6 +31,16 @@ class Question(models.Model):
         ),
         default='-',
     )
+    qtype = models.CharField(
+        max_length=4,
+        choices=(
+            ('chgk', 'ЧГК'),
+            ('br', 'Брэйн'),
+            ('tele', 'Теледомик')
+        ),
+        default='chgk',
+        verbose_name='Тип вопроса',
+    )
     is_deleted = models.BooleanField(default=False, verbose_name='Вопрос удален')
 
     def has_media(self):

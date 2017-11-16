@@ -3,6 +3,8 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.search, name='search'),
+    url(r'^with_answers$', views.search_w_a, name='search_w_a'),
+    url(r'^no_answers$', views.search_n_a, name='search_n_a'),
     url(r'^quest/new/$', views.quest_new, name='quest_new'),
     url(r'^quest/(?P<pk>[0-9]+)/edit/$', views.quest_edit, name='quest_edit'),
     url(r'^quest/(?P<pk>\d+)/remove/$', views.quest_remove, name='quest_remove'),

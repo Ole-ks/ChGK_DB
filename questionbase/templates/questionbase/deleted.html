@@ -2,136 +2,205 @@
 {% block content %}
 
 {% if user.username != 'view' %}
-<div class="infinite-container">
-{% for quest in questions %}
-    <div class="infinite-item">
-        <div class="col-xs-12 col-md-8">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    {% if quest.wow == 'WOW' %}
-                    <span class="label label-success"><span class="glyphicon glyphicon-thumbs-up"></span></span>
-                    {% elif quest.wow == 'FOO' %}
-                    <span class="label label-danger"><span class="glyphicon glyphicon-thumbs-down"></span></span>
-                    {% endif %}
+<div class="col-xs-12 col-sm-12 col-md-9">
 
-                    <strong>Вопрос: </strong>{{ quest.qtext|linebreaksbr }}</p>
+    {% for quest in questions %}
 
-                    <ul class="no-marker">
-                        {% for link, type, i in quest.ext_q_list %}
-                        {% if type == 'img' %}
-                        <li><a href="#" data-toggle="modal" data-target=".bs-qimg{{i}}{{ quest.pk }}-modal-lg">
-                            <img src="{{ MEDIA_URL }}{{ link }}" class="img-thumbnail" style="height: 150px;" alt="упс, картинка потерялась"></a>
-                        </li>
-                        <div class="modal fade bs-qimg{{i}}{{ quest.pk }}-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content">
-                                    <img src="{{ MEDIA_URL }}{{ link }}" class="responsive-img" alt="упс, картинка потерялась">
-                                </div>
-                            </div>
-                        </div>
-                        {% endif %}
-                        {% if type == 'video' %}
-                        <li>
-                            <video src="{{ MEDIA_URL }}{{ link }}" height="200" controls alt="упс, видео потерялось"></video>
-                        </li>
-                        {% endif %}
-                        {% if type == 'audio' %}
-                        <li>
-                            <audio src="{{ MEDIA_URL }}{{ link }}" controls alt="упс, музыка потерялось"></audio>
-                        </li>
-                        {% endif %}
-                        {% if type == 'other' %}
-                        <li><span class="glyphicon glyphicon-paperclip"></span> {{ link }}</li>
-                        {% endif %}
-                        {% endfor %}
-                    </ul>
-
-                    <p><strong>Ответ: </strong>{{ quest.answer|linebreaksbr }}</p>
-                    <ul class="no-marker">
-                        {% for link, type, i in quest.ext_a_list %}
-                        {% if type == 'img' %}
-                        <li><a href="#" data-toggle="modal" data-target=".bs-aimg{{i}}{{ quest.pk }}-modal-lg">
-                            <img src="{{ MEDIA_URL }}{{ link }}" class="img-thumbnail" style="height: 150px;" alt="упс, картинка потерялась"></a>
-                        </li>
-                        <div class="modal fade bs-aimg{{i}}{{ quest.pk }}-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content">
-                                    <img src="{{ MEDIA_URL }}{{ link }}" class="responsive-img" alt="упс, картинка потерялась">
-                                </div>
-                            </div>
-                        </div>
-                        {% endif %}
-                        {% if type == 'video' %}
-                        <li>
-                            <video src="{{ MEDIA_URL }}{{ link }}" height="200" controls alt="упс, видео потерялось"></video>
-                        </li>
-                        {% endif %}
-                        {% if type == 'audio' %}
-                        <li>
-                            <audio src="{{ MEDIA_URL }}{{ link }}" controls alt="упс, музыка потерялось"></audio>
-                        </li>
-                        {% endif %}
-                        {% if type == 'other' %}
-                        <li><span class="glyphicon glyphicon-paperclip"></span> {{ link }}</li>
-                        {% endif %}
-                        {% endfor %}
-                    </ul>
-
-                    <div id="qmore{{ quest.pk }}" class="collapse">
-                        {% if quest.altanswer %}
-                        <p><strong>Зачет: </strong>{{ quest.altanswer|linebreaksbr }}</p>
-                        {% endif %}
-                        <p><strong>Комментарий: </strong>{{ quest.comment|linebreaksbr }}</p>
-                        <p><strong>Автор: </strong>{{ quest.author|linebreaksbr }}</p>
-                        <p><strong>Источник: </strong>{{ quest.source|linebreaksbr }}</p>
-                        {% if quest.is_played %}
-                        <p>Игралось!</p>
-                        {% endif %}
-                        {% if quest.is_bb %}
-                        <p>Черный ящик!</p>
-                        {% endif %}
-                    </div>
-
-                    <div class="row">
-                        <div class="pull-left margin10">
-                            <a href="#qmore{{ quest.pk }}" data-toggle="collapse"><span class="btn btn btn-default">подробнее <span class="caret"></span></span></a>
-                            <a href="{% url 'quest_edit' pk=quest.pk %}"><span class="btn btn btn-default">редактировать</span></a>
-                        </div>
-                        <div class="pull-right margin10">
-                            <a href="{% url 'quest_restore' pk=quest.pk %}">
-                                <span class="btn btn btn-success">Отменить удаление</span></a>
-                            <a href="{% url 'delete_forever' pk=quest.pk %}" class="delete" data-confirm="Уверены, что хотите удалить этот вопрос навсегда?">
-                                <span class="btn btn btn-danger">Удалить навсегда</span></a>
-                        </div>
-                    </div>
-                </div><!-- panel-body-->
-            </div><!-- panel-default-->
-        </div><!-- col-xs-12 col-md-8-->
-    </div><!-- infinite-item-->
-{% endfor %}
-</div><!-- infinite-container-->
-
-<div class="col-xs-12 col-md-8">
-    {% if questions.has_next %}
-        <a class="infinite-more-link" href="?page={{ questions.next_page_number }}">More</a>
+    {% if quest.is_played %}
+    <div class="panel panel-info">
+        <div class="panel-heading">
+    {% else %}
+    <div class="panel panel-default">
+        <div class="panel-body">
     {% endif %}
 
-    <div class="loading" style="display: none;">
-        Loading...
-    </div>
-</div>
+            {% if quest.is_bb %}
+            <span class="glyphicon glyphicon-folder-close"></span>
+            {% endif %}
+            {% if quest.q_has_img %}
+            <span class="glyphicon glyphicon-picture"></span>
+            {% endif %}
+            {% if quest.q_has_video %}
+            <span class="glyphicon glyphicon-facetime-video"></span>
+            {% endif %}
+            {% if quest.q_has_audio %}
+            <span class="glyphicon glyphicon-volume-up"></span>
+            {% endif %}
+            <p>
+            {% if quest.wow == 'WOW' %}
+            <span class="label label-success"><span class="glyphicon glyphicon-thumbs-up"></span></span>
+            {% elif quest.wow == 'FOO' %}
+            <span class="label label-danger"><span class="glyphicon glyphicon-thumbs-down"></span></span>
+            {% endif %}
 
-<script>
-var infinite = new Waypoint.Infinite({
-    element: $('.infinite-container')[0],
-    onBeforePageLoad: function () {
-        $('.loading').show();
-    },
-    onAfterPageLoad: function ($items) {
-        $('.loading').hide();
-    }
-});
-</script>
+            <strong>Вопрос: </strong>{{ quest.qtext|linebreaksbr }}</p>
+
+            <ul class="no-marker">
+                {% for link, type, i in quest.ext_q_list %}
+                {% if type == 'img' %}
+                <li><a href="#" data-toggle="modal" data-target=".bs-qimg{{i}}{{ quest.pk }}-modal-lg">
+                    <img src="{{ MEDIA_URL }}{{ link }}" class="img-thumbnail" style="height: 150px;" alt="упс, картинка потерялась"></a>
+                </li>
+                <div class="modal fade bs-qimg{{i}}{{ quest.pk }}-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <img src="{{ MEDIA_URL }}{{ link }}" class="responsive-img" alt="упс, картинка потерялась">
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% if type == 'video' %}
+                <li>
+                    <video src="{{ MEDIA_URL }}{{ link }}" height="200" controls alt="упс, видео потерялось"></video>
+                </li>
+                {% endif %}
+                {% if type == 'audio' %}
+                <li>
+                    <audio src="{{ MEDIA_URL }}{{ link }}" controls alt="упс, музыка потерялось"></audio>
+                </li>
+                {% endif %}
+                {% if type == 'other' %}
+                <li><span class="glyphicon glyphicon-paperclip"></span> {{ link }}</li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+
+            {% if request.session.with_answers == 'True' %}
+            <p><strong>Ответ: </strong>{{ quest.answer|linebreaksbr }}</p>
+            <ul class="no-marker">
+                {% for link, type, i in quest.ext_a_list %}
+                {% if type == 'img' %}
+                <li><a href="#" data-toggle="modal" data-target=".bs-aimg{{i}}{{ quest.pk }}-modal-lg">
+                    <img src="{{ MEDIA_URL }}{{ link }}" class="img-thumbnail" style="height: 150px;" alt="упс, картинка потерялась"></a>
+                </li>
+                <div class="modal fade bs-aimg{{i}}{{ quest.pk }}-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <img src="{{ MEDIA_URL }}{{ link }}" class="responsive-img" alt="упс, картинка потерялась">
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% if type == 'video' %}
+                <li>
+                    <video src="{{ MEDIA_URL }}{{ link }}" height="200" controls alt="упс, видео потерялось"></video>
+                </li>
+                {% endif %}
+                {% if type == 'audio' %}
+                <li>
+                    <audio src="{{ MEDIA_URL }}{{ link }}" controls alt="упс, музыка потерялось"></audio>
+                </li>
+                {% endif %}
+                {% if type == 'other' %}
+                <li><span class="glyphicon glyphicon-paperclip"></span> {{ link }}</li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+            <div id="qmore1{{ quest.pk }}" class="collapse">
+                {% if quest.altanswer %}
+                <p><strong>Зачет: </strong>{{ quest.altanswer|linebreaksbr }}</p>
+                {% endif %}
+                <p><strong>Комментарий: </strong>{{ quest.comment|linebreaksbr }}</p>
+                <p><strong>Автор: </strong>{{ quest.author|linebreaksbr }}</p>
+                <p><strong>Источник: </strong>{{ quest.source|linebreaksbr|urlize }}</p>
+            </div>
+            {% else %}
+            <div id="qmore2{{ quest.pk }}" class="collapse">
+
+                <p><strong>Ответ: </strong>{{ quest.answer|linebreaksbr }}</p>
+                <ul class="no-marker">
+                    {% for link, type, i in quest.ext_a_list %}
+                    {% if type == 'img' %}
+                    <li><a href="#" data-toggle="modal" data-target=".bs-aimg{{i}}{{ quest.pk }}-modal-lg">
+                        <img src="{{ MEDIA_URL }}{{ link }}" class="img-thumbnail" style="height: 150px;" alt="упс, картинка потерялась"></a>
+                    </li>
+                    <div class="modal fade bs-aimg{{i}}{{ quest.pk }}-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <img src="{{ MEDIA_URL }}{{ link }}" class="responsive-img" alt="упс, картинка потерялась">
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if type == 'video' %}
+                    <li>
+                        <video src="{{ MEDIA_URL }}{{ link }}" height="200" controls alt="упс, видео потерялось"></video>
+                    </li>
+                    {% endif %}
+                    {% if type == 'audio' %}
+                    <li>
+                        <audio src="{{ MEDIA_URL }}{{ link }}" controls alt="упс, музыка потерялось"></audio>
+                    </li>
+                    {% endif %}
+                    {% if type == 'other' %}
+                    <li><span class="glyphicon glyphicon-paperclip"></span> {{ link }}</li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+                {% if quest.altanswer %}
+                <p><strong>Зачет: </strong>{{ quest.altanswer|linebreaksbr }}</p>
+                {% endif %}
+                <p><strong>Комментарий: </strong>{{ quest.comment|linebreaksbr }}</p>
+                <p><strong>Автор: </strong>{{ quest.author|linebreaksbr }}</p>
+                <p><strong>Источник: </strong>{{ quest.source|linebreaksbr|urlize }}</p>
+            </div>
+            {% endif %}
+
+            <div class="row">
+                <div class="pull-left margin10">
+
+
+                    {% if request.session.with_answers == 'True' %}
+                    <a href="#qmore1{{ quest.pk }}" data-toggle="collapse"><span class="btn btn btn-default">подробнее <span class="caret"></span></span></a>
+                    {% else %}
+                    <a href="#qmore2{{ quest.pk }}" data-toggle="collapse"><span class="btn btn btn-default">подробнее <span class="caret"></span></span></a>
+                    {% endif %}
+
+                    {% if user.username != 'view' %}
+                    <a href="{% url 'quest_edit' pk=quest.pk %}"><span class="btn btn btn-default">редактировать</span></a>
+                    {% endif %}
+                </div>
+                {% if user.username != 'view' %}
+                <div class="pull-right margin10">
+                    <a href="{% url 'quest_remove' pk=quest.pk %}" class="delete" data-confirm="Уверены, что хотите удалить этот вопрос?">
+                        <span class="btn btn btn-danger">Удалить</span></a>
+                </div>
+                {% endif %}
+            </div>
+        </div><!-- panel-body-->
+    </div><!-- panel-default or panel-primary-->
+    {% endfor %}
+
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {% if questions.has_previous %}
+            <li><a href="?page={{ questions.previous_page_number }}&{{ request.session.search_query }}">previous</a></li>
+            {% endif %}
+
+            {% for i in questions.paginator.page_range %}
+                {% with border1=questions.number|add:-5 border2=questions.number|add:5 %}
+                {% if i > border1 and i < border2 or i == 1 or i == questions.paginator.num_pages %}
+                    {% if questions.number == i %}
+                        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% else %}
+                        <li><a href="?page={{ i }}&{{ request.session.search_query }}">{{ i }}</a></li>
+                    {% endif %}
+                {% else %}
+                    {% if i == border1 or i == border2 %}
+                        <li><span aria-hidden="true">...</span></li>
+                    {% endif %}
+                {% endif %}
+                {% endwith %}
+            {% endfor %}
+
+            {% if questions.has_next %}
+            <li><a href="?page={{ questions.next_page_number }}&{{ request.session.search_query }}">next</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+</div><!-- col-md-8-->
 
 <script>
 var deleteLinks = document.querySelectorAll('.delete');

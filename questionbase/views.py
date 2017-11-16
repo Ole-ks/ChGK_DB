@@ -74,7 +74,7 @@ def quest_edit(request, pk):
 
 @login_required
 def search(request):
-    quest_filter = QFilter(request.GET, queryset=Question.objects.filter(is_deleted=False))
+    quest_filter = QFilter(request.GET, queryset=Question.objects.filter(is_deleted=False).order_by('-created_date'))
     questions = quest_filter.qs
 
     if 'find-btn' in request.GET:
@@ -106,6 +106,18 @@ def search(request):
         questions = paginator.page(paginator.num_pages)
 
     return render(request, 'questionbase/quest_search.html', {'filter': quest_filter, 'questions': questions})
+
+
+@login_required
+def search_w_a(request):
+    request.session['with_answers'] = 'True'
+    return redirect('search')
+
+
+@login_required
+def search_n_a(request):
+    request.session['with_answers'] = 'False'
+    return redirect('search')
 
 
 @login_required
@@ -141,13 +153,23 @@ def delete_forever(request, pk):
 def deleted(request):
     questions = Question.objects.filter(is_deleted=True).order_by('-created_date')
 
-    page = request.GET.get('page', 1)
-    paginator = Paginator(questions, 5)
+    # Paginator parameter
+    q_per_page = int(request.GET.get('cou', False))
+    if q_per_page in [1, 10, 20, 50]:
+        request.session['q_per_page'] = q_per_page
+
+    if 'q_per_page' in request.session:
+        paginator = Paginator(questions, request.session['q_per_page'])
+    else:
+        paginator = Paginator(questions, 10)
+    page = request.GET.get('page')
     try:
         questions = paginator.page(page)
     except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
         questions = paginator.page(1)
     except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
         questions = paginator.page(paginator.num_pages)
 
     return render(request, 'questionbase/deleted.html', {'questions': questions})
