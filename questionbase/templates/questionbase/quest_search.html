@@ -1,6 +1,7 @@
 {% extends 'questionbase/base.html' %}
 
 {% block content %}
+
 <div class="col-xs-12 col-sm-12 col-md-9">
     <div class="panel panel-default">
         <div class="panel-body">
@@ -255,18 +256,18 @@
             <div class="row">
                 <div class="pull-left margin10">
 
-
                     {% if request.session.with_answers == 'True' %}
                     <a href="#qmore1{{ quest.pk }}" data-toggle="collapse"><span class="btn btn btn-default">подробнее <span class="caret"></span></span></a>
                     {% else %}
                     <a href="#qmore2{{ quest.pk }}" data-toggle="collapse"><span class="btn btn btn-default">подробнее <span class="caret"></span></span></a>
                     {% endif %}
 
-                    {% if user.username != 'view' %}
+                    {% if 'viewers' not in user.groups.all|stringformat:"s" %}
                     <a href="{% url 'quest_edit' pk=quest.pk %}"><span class="btn btn btn-default">редактировать</span></a>
                     {% endif %}
+
                 </div>
-                {% if user.username != 'view' %}
+                {% if 'viewers' not in user.groups.all|stringformat:"s" %}
                 <div class="pull-right margin10">
                     <a href="{% url 'quest_remove' pk=quest.pk %}" class="delete" data-confirm="Уверены, что хотите удалить этот вопрос?">
                         <span class="btn btn btn-danger">Удалить</span></a>

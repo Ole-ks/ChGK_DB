@@ -1,8 +1,8 @@
 {% extends 'questionbase/base.html' %}
 {% block content %}
 
-{% if user.username != 'view' %}
-<div class="col-xs-12 col-sm-12 col-md-9">
+{% if 'viewers' not in user.groups.all|stringformat:"s" %}
+<div class="col-xs-12 col-sm-10 col-md-10">
 
     {% for quest in questions %}
 

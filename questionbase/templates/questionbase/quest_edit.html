@@ -2,7 +2,7 @@
 
 {% block content %}
 
-{% if user.username != 'view' %}
+{% if 'viewers' not in user.groups.all|stringformat:"s" %}
 <div class="container">
 
     <form method="POST" class="post-form" enctype="multipart/form-data">

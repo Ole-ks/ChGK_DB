@@ -35,17 +35,16 @@
                 {% endif %}
 
             </div>
-
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    {% if user.username != 'view' %}
-                    <li><a href="{% url 'quest_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
-                    </li>
+
+                    {% if 'viewers' not in user.groups.all|stringformat:"s" %}
+                    <li><a href="{% url 'quest_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a></li>
                     {% endif %}
                 </ul>
                 <ul class="nav navbar-nav">
-                    {% if user.username != 'view' %}
+                    {% if 'viewers' not in user.groups.all|stringformat:"s" %}
                     <li><a href="{% url 'deleted' %}" class="top-menu"><span class="glyphicon glyphicon-trash"></span></a>
                     </li>
                     {% endif %}
@@ -53,7 +52,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li role="presentation" class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            Hello {{ user.username }} <span class="caret"></span>
+                            Hello {{ user }}<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu ">
                             <li><a href="{% url 'change_password' %}"><span class="">сменить пароль</span></a></li>
@@ -73,6 +72,8 @@
     {% block content %}
     {% endblock %}
 </div>
+
+
 
 <script>
 // When the user scrolls down 20px from the top of the document, show the button
