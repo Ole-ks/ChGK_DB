@@ -50,6 +50,8 @@ class QFilter(django_filters.FilterSet):
                                choices=(('WOW', 'WOW'),('-', 'не указано'),('FOO', 'FOO')))
     qtype = filters.ChoiceFilter(label='Тип вопроса', widget=forms.Select(attrs={'class': 'btn btn-sm btn-default dropdown-toggle'}),
                                  choices=(('chgk', 'ЧГК'), ('br', 'Брэйн'), ('tele', 'Теледомик')))
+    is_blitz = filters.ChoiceFilter(widget=forms.Select(attrs={'class': 'btn btn-default btn-sm dropdown-toggle'}),
+                                 choices=((True, 'да'), (False, 'нет')))
     o = filters.OrderingFilter(
         fields=(('created_date', 'created_date'),),
         field_labels={'created_date': 'дата создания',},

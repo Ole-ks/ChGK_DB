@@ -1,0 +1,131 @@
+{% extends 'questionbase/base.html' %}
+
+{% block content %}
+
+{% if 'viewers' not in user.groups.all|stringformat:"s" %}
+<div class="container">
+
+    <form method="POST" class="post-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            {% for error in qform.non_field_errors %}
+            <div class="form-group has-errors text-danger small">
+                {{error}}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+            {% for error in bform.non_field_errors %}
+            <div class="form-group has-errors text-danger small">
+                {{error}}
+            </div>
+            {% endfor %}
+        </div>
+
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-2">{{ bform.qtext1.label_tag }}</div>
+            <div class="col-xs-12 col-sm-9 col-md-8">{{ bform.qtext1 }}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-2">{{ qform.qlink1.label_tag }}</div>
+            <div class="col-xs-12 col-sm-9 col-md-8">{{ qform.qlink1 }}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-2">{{ bform.answer1.label_tag }}</div>
+            <div class="col-xs-12 col-sm-9 col-md-8">{{ bform.answer1 }}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-2">{{ qform.alink1.label_tag }}</div>
+            <div class="col-xs-12 col-sm-9 col-md-8">{{ qform.alink1 }}</div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-2">{{ bform.qtext2.label_tag }}</div>
+            <div class="col-xs-12 col-sm-9 col-md-8">{{ bform.qtext2 }}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-2">{{ qform.qlink2.label_tag }}</div>
+            <div class="col-xs-12 col-sm-9 col-md-8">{{ qform.qlink2 }}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-2">{{ bform.answer2.label_tag }}</div>
+            <div class="col-xs-12 col-sm-9 col-md-8">{{ bform.answer2 }}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-2">{{ qform.alink2.label_tag }}</div>
+            <div class="col-xs-12 col-sm-9 col-md-8">{{ qform.alink2 }}</div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-2">{{ bform.qtext3.label_tag }}</div>
+            <div class="col-xs-12 col-sm-9 col-md-8">{{ bform.qtext3 }}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-2">{{ qform.qlink3.label_tag }}</div>
+            <div class="col-xs-12 col-sm-9 col-md-8">{{ qform.qlink3 }}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-2">{{ bform.answer3.label_tag }}</div>
+            <div class="col-xs-12 col-sm-9 col-md-8">{{ bform.answer3 }}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-2">{{ qform.alink3.label_tag }}</div>
+            <div class="col-xs-12 col-sm-9 col-md-8">{{ qform.alink3 }}</div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-2">{{ qform.comment.label_tag }}</div>
+            <div class="col-xs-12 col-sm-9 col-md-8">{{ qform.comment }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-2">{{ qform.author.label_tag }}</div>
+            <div class="col-xs-12 col-sm-9 col-md-8">{{ qform.author }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-2">{{ qform.source.label_tag }}</div>
+            <div class="col-xs-12 col-sm-9 col-md-8">{{ qform.source }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-2">{{ qform.is_played.label_tag }}</div>
+            <div class="col-xs-12 col-sm-9 col-md-8">{{ qform.is_played }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-2">{{ qform.is_bb.label_tag }}</div>
+            <div class="col-xs-12 col-sm-9 col-md-8">{{ qform.is_bb }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-2">{{ qform.qtype.label_tag }}</div>
+            <div class="col-xs-12 col-sm-9 col-md-8">{{ qform.qtype }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-2">{{ qform.wow.label_tag }}</div>
+            <div class="col-xs-12 col-sm-9 col-md-8">{{ qform.wow }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-9 col-md-8">{{ qform.qtext }}</div>
+            <div class="col-xs-12 col-sm-9 col-md-8">{{ qform.answer }}</div>
+        </div>
+
+
+        <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
+            <div class="pull-left margin10">
+                <button type="submit" name="submit_new" class="btn btn-primary ">Сохранить и добавить новый вопрос</button>
+                <button type="submit" name="submit_edit" class="btn btn-primary ">Сохранить и продолжить редактирование</button>
+                <button type="submit" name="submit_exit" class="btn btn-primary ">Сохранить</button>
+                <a href="{% url 'search' %}?{{ request.session.search_query }}#q{{ questid }}"><span class="btn btn-default">Отменить</span></a>
+            </div>
+        </div>
+
+    </form>
+</div>
+{% endif %}
+
+{% endblock %}

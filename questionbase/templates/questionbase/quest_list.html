@@ -1,0 +1,208 @@
+    <div class="panel panel-info" id="q{{ quest.id }}">
+    {% if quest.is_played %}
+        <div class="panel-heading">
+    {% else %}
+        <div class="panel-body">
+    {% endif %}
+
+            <!-- <a href="#q{{ quest.id }}">тыц</a> -->
+
+            {% if quest.wow == 'WOW' %}
+                <span class="label label-success"><span class="glyphicon glyphicon-thumbs-up"></span></span>
+            {% elif quest.wow == 'FOO' %}
+                <span class="label label-danger"><span class="glyphicon glyphicon-thumbs-down"></span></span>
+            {% endif %}
+            {% if quest.is_bb %}<span class="glyphicon glyphicon-folder-close"></span>{% endif %}
+            {% if quest.q_has_img %}<span class="glyphicon glyphicon-picture"></span>{% endif %}
+            {% if quest.q_has_video %}<span class="glyphicon glyphicon-facetime-video"></span>{% endif %}
+            {% if quest.q_has_audio %}<span class="glyphicon glyphicon-volume-up"></span>{% endif %}
+
+            {% if quest.is_blitz %}
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Вопрос 1: </strong>{{ quest.blitz.qtext1|linebreaksbr }}</li>
+                    <li class="list-group-item"><strong>Вопрос 2: </strong>{{ quest.blitz.qtext2|linebreaksbr }}</li>
+                {% if quest.blitz.qtext3 %}
+                    <li class="list-group-item"><strong>Вопрос 3: </strong>{{ quest.blitz.qtext3|linebreaksbr }}</li></ul>
+                {% else %}
+                    </ul>
+                {% endif %}
+            {% else %}
+                <strong>Вопрос: </strong>{{ quest.qtext|linebreaksbr }}
+            {% endif %}
+
+            <ul class="no-marker">
+                {% for link, type, i in quest.ext_q_list %}
+                {% if quest.is_blitz and link %}
+                К вопросу {{ i }}
+                {% endif %}
+                {% if type == 'img' %}
+                <li><a href="#" data-toggle="modal" data-target=".bs-qimg{{i}}{{ quest.pk }}-modal-lg">
+                    <img src="{{ MEDIA_URL }}{{ link }}" class="img-thumbnail" style="height: 150px;" alt="упс, картинка потерялась"></a>
+                </li>
+                <div class="modal fade bs-qimg{{i}}{{ quest.pk }}-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <img src="{{ MEDIA_URL }}{{ link }}" class="responsive-img" alt="упс, картинка потерялась">
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% if type == 'video' %}
+                <li>
+                    <video src="{{ MEDIA_URL }}{{ link }}" height="200" controls alt="упс, видео потерялось"></video>
+                </li>
+                {% endif %}
+                {% if type == 'audio' %}
+                <li>
+                    <audio src="{{ MEDIA_URL }}{{ link }}" controls alt="упс, музыка потерялось"></audio>
+                </li>
+                {% endif %}
+                {% if type == 'other' %}
+                <li><span class="glyphicon glyphicon-paperclip"></span> {{ link }}</li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+
+            {% if request.session.with_answers == 'True' %}
+            {% if quest.is_blitz %}
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Ответ 1: </strong>{{ quest.blitz.answer1|linebreaksbr }}</li>
+                    <li class="list-group-item"><strong>Ответ 2: </strong>{{ quest.blitz.answer2|linebreaksbr }}</li>
+                {% if quest.blitz.answer3 %}
+                    <li class="list-group-item"><strong>Ответ 3: </strong>{{ quest.blitz.answer3|linebreaksbr }}</li>
+                </ul>
+                {% else %}
+                </ul>
+                {% endif %}
+            {% else %}
+                <strong>Ответ: </strong>{{ quest.answer|linebreaksbr }}
+            {% endif %}
+            <ul class="no-marker">
+                {% for link, type, i in quest.ext_a_list %}
+                {% if quest.is_blitz and link %}
+                К ответу {{ i }}
+                {% endif %}
+                {% if type == 'img' %}
+                <li><a href="#" data-toggle="modal" data-target=".bs-aimg{{i}}{{ quest.pk }}-modal-lg">
+                    <img src="{{ MEDIA_URL }}{{ link }}" class="img-thumbnail" style="height: 150px;" alt="упс, картинка потерялась"></a>
+                </li>
+                <div class="modal fade bs-aimg{{i}}{{ quest.pk }}-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <img src="{{ MEDIA_URL }}{{ link }}" class="responsive-img" alt="упс, картинка потерялась">
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% if type == 'video' %}
+                <li>
+                    <video src="{{ MEDIA_URL }}{{ link }}" height="200" controls alt="упс, видео потерялось"></video>
+                </li>
+                {% endif %}
+                {% if type == 'audio' %}
+                <li>
+                    <audio src="{{ MEDIA_URL }}{{ link }}" controls alt="упс, музыка потерялось"></audio>
+                </li>
+                {% endif %}
+                {% if type == 'other' %}
+                <li><span class="glyphicon glyphicon-paperclip"></span> {{ link }}</li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+            <div id="qmore1{{ quest.pk }}" class="collapse">
+                {% if quest.altanswer %}
+                <p><strong>Зачет: </strong>{{ quest.altanswer|linebreaksbr }}</p>
+                {% endif %}
+                {% if quest.comment %}
+                <p><strong>Комментарий: </strong>{{ quest.comment|linebreaksbr }}</p>
+                {% endif %}
+                <p><strong>Автор: </strong>{{ quest.author|linebreaksbr }}</p>
+                {% if quest.source %}
+                <p><strong>Источник: </strong>{{ quest.source|linebreaksbr|urlizetrunc:75 }}</p>
+                {% endif %}
+            </div>
+            {% else %}
+            <div id="qmore2{{ quest.pk }}" class="collapse">
+
+                {% if quest.is_blitz %}
+                    <ul class="list-group">
+                        <li class="list-group-item"><strong>Ответ 1: </strong>{{ quest.blitz.answer1|linebreaksbr }}</li>
+                        <li class="list-group-item"><strong>Ответ 2: </strong>{{ quest.blitz.answer2|linebreaksbr }}</li>
+                    {% if quest.blitz.answer3 %}
+                        <li class="list-group-item"><strong>Ответ 3: </strong>{{ quest.blitz.answer3|linebreaksbr }}</li>
+                    </ul>
+                    {% else %}
+                    </ul>
+                    {% endif %}
+                {% else %}
+                    <p><strong>Ответ: </strong>{{ quest.answer|linebreaksbr }}</p>
+                {% endif %}
+                <ul class="no-marker">
+                    {% for link, type, i in quest.ext_a_list %}
+                    {% if quest.is_blitz and link %}
+                    К ответу {{ i }}
+                    {% endif %}
+                    {% if type == 'img' %}
+                    <li><a href="#" data-toggle="modal" data-target=".bs-aimg{{i}}{{ quest.pk }}-modal-lg">
+                        <img src="{{ MEDIA_URL }}{{ link }}" class="img-thumbnail" style="height: 150px;" alt="упс, картинка потерялась"></a>
+                    </li>
+                    <div class="modal fade bs-aimg{{i}}{{ quest.pk }}-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <img src="{{ MEDIA_URL }}{{ link }}" class="responsive-img" alt="упс, картинка потерялась">
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if type == 'video' %}
+                    <li>
+                        <video src="{{ MEDIA_URL }}{{ link }}" height="200" controls alt="упс, видео потерялось"></video>
+                    </li>
+                    {% endif %}
+                    {% if type == 'audio' %}
+                    <li>
+                        <audio src="{{ MEDIA_URL }}{{ link }}" controls alt="упс, музыка потерялось"></audio>
+                    </li>
+                    {% endif %}
+                    {% if type == 'other' %}
+                    <li><span class="glyphicon glyphicon-paperclip"></span> {{ link }}</li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+                {% if quest.altanswer %}
+                <p><strong>Зачет: </strong>{{ quest.altanswer|linebreaksbr }}</p>
+                {% endif %}
+                {% if quest.comment %}
+                <p><strong>Комментарий: </strong>{{ quest.comment|linebreaksbr }}</p>
+                {% endif %}
+                <p><strong>Автор: </strong>{{ quest.author|linebreaksbr }}</p>
+                {% if quest.source %}
+                <p><strong>Источник: </strong>{{ quest.source|linebreaksbr|urlizetrunc:75 }}</p>
+                {% endif %}
+            </div>
+            {% endif %}
+
+
+            <div class="row">
+                <div class="pull-left margin10">
+
+                    {% if request.session.with_answers == 'True' %}
+                        <a href="#qmore1{{ quest.pk }}" data-toggle="collapse"><span class="btn btn btn-default">подробнее <span class="caret"></span></span></a>
+                    {% else %}
+                        <a href="#qmore2{{ quest.pk }}" data-toggle="collapse"><span class="btn btn btn-default">подробнее <span class="caret"></span></span></a>
+                    {% endif %}
+                    {% if 'viewers' not in user.groups.all|stringformat:"s" and quest.is_blitz %}
+                        <a href="{% url 'blitz_quest_edit' pk=quest.pk %}?from={{ current_path|urlencode }}"><span class="btn btn btn-default">редактировать</span></a>
+                    {% elif 'viewers' not in user.groups.all|stringformat:"s" %}
+                        <a href="{% url 'quest_edit' pk=quest.pk %}?from={{ current_path|urlencode }}"><span class="btn btn btn-default">редактировать</span></a>
+                    {% endif %}
+                </div>
+                {% if 'viewers' not in user.groups.all|stringformat:"s" %}
+                <div class="pull-right margin10">
+                    <a href="{% url 'quest_remove' pk=quest.pk %}" class="delete" data-confirm="Уверены, что хотите удалить этот вопрос?">
+                        <span class="btn btn btn-danger">Удалить</span></a>
+                </div>
+                {% endif %}
+            </div>
+        </div><!-- panel-body-->
+    </div><!-- panel-default or panel-primary-->

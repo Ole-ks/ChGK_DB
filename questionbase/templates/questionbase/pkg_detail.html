@@ -1,0 +1,32 @@
+{% extends 'questionbase/base.html' %}
+{% block content %}
+
+<div class="col-xs-12 col-sm-12 col-md-9">
+
+    {% for quest in questions %}
+        {% include 'questionbase/quest_list.html' %}
+    {% empty %}
+        Не выбрано ни одного вопроса. <a href="{% url 'search' %}">Перейти к вопросам</a>
+    {% endfor %}
+
+</div><!-- col-md-8-->
+
+
+<script>
+var deleteLinks = document.querySelectorAll('.delete');
+
+for (var i = 0; i < deleteLinks.length; i++) {
+  deleteLinks[i].addEventListener('click', function(event) {
+      event.preventDefault();
+
+      var choice = confirm(this.getAttribute('data-confirm'));
+
+      if (choice) {
+        window.location.href = this.getAttribute('href');
+      }
+  });
+}
+</script>
+
+
+{% endblock %}

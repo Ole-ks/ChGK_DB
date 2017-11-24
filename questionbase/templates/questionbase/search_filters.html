@@ -1,0 +1,67 @@
+            <form method="get">
+
+                <div class="row">
+                    <div style="margin-left: 10px; margin-right: 10px; margin-top: 1px; margin-bottom: 1px;">{{ filter.form.search }}</div>
+                </div>
+                <div class="row">
+                    <div style="margin-left: 10px; margin-right: 10px; margin-top: 1px; margin-bottom: 1px;">{{ filter.form.author }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 col-md-3" style="margin-top: 1px; margin-bottom: 1px;"><span class="glyphicon glyphicon-picture"></span> {{ filter.form.q_has_img.label_tag }}</div>
+                    <div class="col-xs-6 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">{{ filter.form.q_has_img }}</div>
+                    <div class="col-xs-4 col-md-3 col-md-offset-1" style="margin-top: 1px; margin-bottom: 1px;"><span class="glyphicon glyphicon-facetime-video"></span> {{ filter.form.q_has_video.label_tag }}</div>
+                    <div class="col-xs-6 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">{{ filter.form.q_has_video }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 col-md-3" style="margin-top: 1px; margin-bottom: 1px;"><span class="glyphicon glyphicon-volume-up"></span> {{ filter.form.q_has_audio.label_tag }}</div>
+                    <div class="col-xs-6 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">{{ filter.form.q_has_audio }}</div>
+                    <div class="col-xs-4 col-md-3 col-md-offset-1" style="margin-top: 1px; margin-bottom: 1px;">{{ filter.form.q_has_media.label_tag }}</div>
+                    <div class="col-xs-6 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">{{ filter.form.q_has_media }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 col-md-3" style="margin-top: 1px; margin-bottom: 1px;">{{ filter.form.is_played.label_tag }}</div>
+                    <div class="col-xs-6 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">{{ filter.form.is_played }}</div>
+                    <div class="col-xs-4 col-md-3 col-md-offset-1" style="margin-top: 1px; margin-bottom: 1px;"><span class="glyphicon glyphicon-folder-close"></span> {{ filter.form.is_bb.label_tag }}</div>
+                    <div class="col-xs-6 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">{{ filter.form.is_bb }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 col-md-3" style="margin-top: 1px; margin-bottom: 1px;">{{ filter.form.wow.label_tag }}</div>
+                    <div class="col-xs-6 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">{{ filter.form.wow }}</div>
+                    <div class="col-xs-4 col-md-3 col-md-offset-1" style="margin-top: 1px; margin-bottom: 1px;">{{ filter.form.qtype.label_tag }}</div>
+                    <div class="col-xs-6 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">{{ filter.form.qtype }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 col-md-3" style="margin-top: 1px; margin-bottom: 1px;">{{ filter.form.is_blitz.label_tag }}</div>
+                    <div class="col-xs-6 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">{{ filter.form.is_blitz }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 col-md-3" style="margin-top: 1px; margin-bottom: 1px;">{{ filter.form.o.label_tag }}</div>
+                    <div class="col-xs-6 col-md-2" style="margin-top: 1px; margin-bottom: 1px;">{{ filter.form.o }}</div>
+                </div>
+
+                <div class="row" style="margin-top: 10px;">
+                    <div class="pull-left margin10">
+                        <button type="submit" name="find-btn" class="btn btn-primary">Поиск</button>
+                        <a href="{% url 'search' %}?cancel-btn=" ><span class="btn btn-default">Очистить поиск</span></a>
+                    </div>
+                    <div class="pull-right margin10">
+
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                вопросов на странице <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                {% if request.session.q_per_page == 1 %}<li class="active">{% else %}<li>{% endif %}
+                                <a href="{% url 'search' %}?cou=1&{{ request.session.search_query }}">1</a></li>
+                                {% if request.session.q_per_page == 10 %}<li class="active">{% else %}<li>{% endif %}
+                                <a href="{% url 'search' %}?cou=10&{{ request.session.search_query }}">10</a></li>
+                                {% if request.session.q_per_page == 20 %}<li class="active">{% else %}<li>{% endif %}
+                                <a href="{% url 'search' %}?cou=20&{{ request.session.search_query }}">20</a></li>
+                                {% if request.session.q_per_page == 50 %}<li class="active">{% else %}<li>{% endif %}
+                                <a href="{% url 'search' %}?cou=50&{{ request.session.search_query }}">50</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
