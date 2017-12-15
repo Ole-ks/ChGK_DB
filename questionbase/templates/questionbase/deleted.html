@@ -2,7 +2,7 @@
 {% block content %}
 
 {% if 'viewers' not in user.groups.all|stringformat:"s" %}
-<div class="col-xs-12 col-sm-10 col-md-10">
+<div class="col-xs-12 col-sm-12 col-md-9">
 
     {% for quest in questions %}
         {% include 'questionbase/quest_list.html' %}
@@ -39,6 +39,11 @@
 
 </div><!-- col-md-8-->
 
+{% endif %}
+
+{% endblock %}
+
+{% block javascript %}
 <script>
 var deleteLinks = document.querySelectorAll('.delete');
 
@@ -54,6 +59,4 @@ for (var i = 0; i < deleteLinks.length; i++) {
   });
 }
 </script>
-{% endif %}
-
 {% endblock %}

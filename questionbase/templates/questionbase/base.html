@@ -64,7 +64,7 @@
                 {% endif %}
                 {% if request.session.work_pkg_id %}
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="{% url 'pkg_detail' request.session.work_pkg_id %}" class="top-menu btn-lg">открыт пакет {{ request.session.work_pkg_name }}</a></li>
+                    <li class="active"><a href="{% url 'pkg_detail' request.session.work_pkg_id %}" class="top-menu btn-lg">выбран пакет {{ request.session.work_pkg_name }}</a></li>
                 </ul>
                 {% endif %}
                 <ul class="nav navbar-nav navbar-right">
@@ -112,7 +112,7 @@ function topFunction() {
 }
 
 </script>
-
+{% block javascript %}{% endblock %}
 
 </body>
 </html>

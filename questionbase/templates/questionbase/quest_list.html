@@ -186,6 +186,14 @@
             <div class="row">
                 <div class="pull-left margin10">
 
+                    {% if not request.session.work_pkg_id %}
+                    {% elif quest.id in q_in_pkg_list and current_path|urlencode == '/' %}
+                    <button class="btn btn-success disabled" title="уже в пакете"><span class="glyphicon glyphicon-ok"></span></button>
+                    {% elif quest.id not in q_in_pkg_list and current_path|urlencode == '/' %}
+                    <button class="btn btn-default add_to_pkg" title="добавить в пакет" name="{{ quest.id}}" id="id_add_to_pkg{{ quest.id }}"><span class="glyphicon glyphicon-plus"></span></button>
+                    {% endif %}
+
+
                     {% if request.session.with_answers == 'True' %}
                         <a href="#qmore1{{ quest.pk }}" data-toggle="collapse"><span class="btn btn btn-default">подробнее <span class="caret"></span></span></a>
                     {% else %}
@@ -197,10 +205,16 @@
                         <a href="{% url 'quest_edit' pk=quest.pk %}?from={{ current_path|urlencode }}"><span class="btn btn btn-default">редактировать</span></a>
                     {% endif %}
                 </div>
-                {% if 'viewers' not in user.groups.all|stringformat:"s" %}
+                {% if 'viewers' not in user.groups.all|stringformat:"s" and current_path|urlencode == '/' %}
                 <div class="pull-right margin10">
                     <a href="{% url 'quest_remove' pk=quest.pk %}" class="delete" data-confirm="Уверены, что хотите удалить этот вопрос?">
                         <span class="btn btn btn-danger">Удалить</span></a>
+                </div>
+                {% endif %}
+                {% if 'viewers' not in user.groups.all|stringformat:"s" and current_path|urlencode == '/deleted/' %}
+                <div class="pull-right margin10">
+                    <a href="{% url 'delete_forever' pk=quest.pk %}" class="delete" data-confirm="Уверены, что хотите удалить этот вопрос навсегда?">
+                        <span class="btn btn btn-danger">Удалить навсегда</span></a>
                 </div>
                 {% endif %}
             </div>

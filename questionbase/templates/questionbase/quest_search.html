@@ -44,7 +44,10 @@
 
 </div><!-- col-md-8-->
 
+{% endblock %}
 
+
+{% block javascript %}
 <script>
 var deleteLinks = document.querySelectorAll('.delete');
 
@@ -61,5 +64,27 @@ for (var i = 0; i < deleteLinks.length; i++) {
 }
 </script>
 
+<script>
+    $(".add_to_pkg").click(function () {
+        var q_id = $(this).attr('name');
 
+        $.ajax({
+            url: '/add_quest_to_pkg/',
+            data: {
+                'q_id': q_id
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.cou) {
+                    alert(data.cou);
+                }
+
+            }
+        });
+        $(this).toggleClass("btn-default add_to_pkg btn-success disabled");
+        $(this).empty();
+        $(this).append('<span class="glyphicon glyphicon-ok"></span>')
+        $(this).attr('title', 'уже в пакете');
+    });
+</script>
 {% endblock %}

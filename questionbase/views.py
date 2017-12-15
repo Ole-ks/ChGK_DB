@@ -5,6 +5,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from django.utils import timezone
+from django.http import JsonResponse
 from .models import Question
 from .models import Blitz
 from .models import Package
@@ -179,7 +180,11 @@ def search(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         questions = paginator.page(paginator.num_pages)
 
-    return render(request, 'questionbase/quest_search.html', {'filter': quest_filter, 'questions': questions, 'current_path': request.get_full_path()})
+    q_in_pkg_list = []
+    if 'work_pkg_id' in request.session:
+        q_in_pkg_list = PackageDetail.objects.filter(pkg_id=request.session['work_pkg_id']).values_list('quest_id', flat=True)
+
+    return render(request, 'questionbase/quest_search.html', {'filter': quest_filter, 'questions': questions, 'current_path': request.get_full_path(), 'q_in_pkg_list': q_in_pkg_list})
 
 
 @login_required
@@ -195,7 +200,7 @@ def pkg_new(request):
             return redirect('search')
     else:
         form = PkgForm(request.POST)
-    return render(request, 'questionbase/pkg_new.html', {'form': form})
+    return render(request, 'questionbase/pkg_new.html', {'form': form, 'current_path': request.get_full_path()})
 
 
 @login_required
@@ -221,17 +226,16 @@ def pkg_list(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         pkgs = paginator.page(paginator.num_pages)
 
-    return render(request, 'questionbase/pkg_list.html', {'pkgs': pkgs})
+    return render(request, 'questionbase/pkg_list.html', {'pkgs': pkgs, 'current_path': request.get_full_path()})
 
 
 @login_required
 def pkg_detail(request, pk):
     pkg = get_object_or_404(Package, pk=pk)
     questions = Question.objects.filter(question_in_pkg__pkg_id=pk)
-    if request.session['work_pkg_id'] != pkg.id:
-        request.session['work_pkg_id'] = pkg.id
-        request.session['work_pkg_name'] = pkg.name
-    return render(request, 'questionbase/pkg_detail.html', {'questions': questions})
+    request.session['work_pkg_id'] = pkg.id
+    request.session['work_pkg_name'] = pkg.name
+    return render(request, 'questionbase/pkg_detail.html', {'questions': questions, 'current_path': request.get_full_path()})
 
 
 @login_required
@@ -304,4 +308,17 @@ def deleted(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         questions = paginator.page(paginator.num_pages)
 
-    return render(request, 'questionbase/deleted.html', {'questions': questions})
+    return render(request, 'questionbase/deleted.html', {'questions': questions, 'current_path': request.get_full_path()})
+
+@login_required
+def add_quest_to_pkg(request):
+    q_id = request.GET.get('q_id', None)
+    if q_id:
+        quest = get_object_or_404(Question, pk=q_id)
+        pkg = get_object_or_404(Package, pk=request.session['work_pkg_id'])
+        p = PackageDetail(quest_id=quest, pkg_id=pkg)
+        p.save()
+        data = {
+            'cou': 'Added!'
+        }
+    return JsonResponse(data)

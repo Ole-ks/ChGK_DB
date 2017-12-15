@@ -18,6 +18,6 @@ urlpatterns = [
     url(r'^pkg/new/$', views.pkg_new, name='pkg_new'),
     url(r'^pkg_list/$', views.pkg_list, name='pkg_list'),
     url(r'^pkg_detail/(?P<pk>\d+)/$', views.pkg_detail, name='pkg_detail'),
-
+    url(r'^add_quest_to_pkg/$', views.add_quest_to_pkg, name='add_quest_to_pkg'),
 
 ]
