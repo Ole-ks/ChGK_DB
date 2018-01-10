@@ -5,7 +5,40 @@
 <div class="col-xs-12 col-sm-12 col-md-9">
 
     {% for quest in questions %}
-        {% include 'questionbase/quest_list.html' %}
+
+
+        <div class="panel panel-info" id="q{{ quest.id }}">
+        {% if quest.is_played %}
+            <div class="panel-heading">
+        {% else %}
+            <div class="panel-body">
+        {% endif %}
+
+                {% include 'questionbase/quest_list.html' %}
+
+                <div class="row">
+                    <div class="pull-left margin10">
+                        {% if request.session.with_answers == 'True' %}
+                            <a href="#qmore1{{ quest.pk }}" data-toggle="collapse" class="more" id="bmore1{{ quest.pk }}"><span class="btn btn btn-default">подробнее <span class="caret"></span></span></a>
+                        {% else %}
+                            <a href="#qmore2{{ quest.pk }}" data-toggle="collapse" class="more" id="bmore2{{ quest.pk }}"><span class="btn btn btn-default">подробнее <span class="caret"></span></span></a>
+                        {% endif %}
+                        {% if 'viewers' not in user.groups.all|stringformat:"s" %}
+                            <a href="{% url 'quest_edit' pk=quest.pk %}?from={{ current_path|urlencode }}"><span class="btn btn btn-default">редактировать</span></a>
+                        {% endif %}
+                    </div>
+                    {% if 'viewers' not in user.groups.all|stringformat:"s" %}
+                    <div class="pull-right margin10">
+                        <a href="{% url 'delete_forever' pk=quest.pk %}" class="delete" data-confirm="Уверены, что хотите удалить этот вопрос навсегда?">
+                            <span class="btn btn btn-danger">Удалить навсегда</span></a>
+                    </div>
+                    {% endif %}
+                </div>
+
+
+            </div><!-- panel-body-->
+        </div><!-- panel-default or panel-primary-->
+
     {% endfor %}
 
 

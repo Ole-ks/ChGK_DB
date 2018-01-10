@@ -1,12 +1,5 @@
-    <div class="panel panel-info" id="q{{ quest.id }}">
-    {% if quest.is_played %}
-        <div class="panel-heading">
-    {% else %}
-        <div class="panel-body">
-    {% endif %}
-
             <!-- <a href="#q{{ quest.id }}">тыц</a> -->
-
+            {% if quest.is_blitz %}<span class="glyphicon glyphicon-menu-hamburger"></span>{% endif %}
             {% if quest.wow == 'WOW' %}
                 <span class="label label-success"><span class="glyphicon glyphicon-thumbs-up"></span></span>
             {% elif quest.wow == 'FOO' %}
@@ -17,24 +10,12 @@
             {% if quest.q_has_video %}<span class="glyphicon glyphicon-facetime-video"></span>{% endif %}
             {% if quest.q_has_audio %}<span class="glyphicon glyphicon-volume-up"></span>{% endif %}
 
-            {% if quest.is_blitz %}
-                <ul class="list-group">
-                    <li class="list-group-item"><strong>Вопрос 1: </strong>{{ quest.blitz.qtext1|linebreaksbr }}</li>
-                    <li class="list-group-item"><strong>Вопрос 2: </strong>{{ quest.blitz.qtext2|linebreaksbr }}</li>
-                {% if quest.blitz.qtext3 %}
-                    <li class="list-group-item"><strong>Вопрос 3: </strong>{{ quest.blitz.qtext3|linebreaksbr }}</li></ul>
-                {% else %}
-                    </ul>
-                {% endif %}
-            {% else %}
-                <strong>Вопрос: </strong>{{ quest.qtext|linebreaksbr }}
-            {% endif %}
+            {{ quest.question_in_pkg.package }}
+
+            <strong>Вопрос: </strong>{{ quest.qtext|linebreaksbr }}
 
             <ul class="no-marker">
                 {% for link, type, i in quest.ext_q_list %}
-                {% if quest.is_blitz and link %}
-                К вопросу {{ i }}
-                {% endif %}
                 {% if type == 'img' %}
                 <li><a href="#" data-toggle="modal" data-target=".bs-qimg{{i}}{{ quest.pk }}-modal-lg">
                     <img src="{{ MEDIA_URL }}{{ link }}" class="img-thumbnail" style="height: 150px;" alt="упс, картинка потерялась"></a>
@@ -64,24 +45,9 @@
             </ul>
 
             {% if request.session.with_answers == 'True' %}
-            {% if quest.is_blitz %}
-                <ul class="list-group">
-                    <li class="list-group-item"><strong>Ответ 1: </strong>{{ quest.blitz.answer1|linebreaksbr }}</li>
-                    <li class="list-group-item"><strong>Ответ 2: </strong>{{ quest.blitz.answer2|linebreaksbr }}</li>
-                {% if quest.blitz.answer3 %}
-                    <li class="list-group-item"><strong>Ответ 3: </strong>{{ quest.blitz.answer3|linebreaksbr }}</li>
-                </ul>
-                {% else %}
-                </ul>
-                {% endif %}
-            {% else %}
-                <strong>Ответ: </strong>{{ quest.answer|linebreaksbr }}
-            {% endif %}
+            <strong>Ответ: </strong>{{ quest.answer|linebreaksbr }}
             <ul class="no-marker">
                 {% for link, type, i in quest.ext_a_list %}
-                {% if quest.is_blitz and link %}
-                К ответу {{ i }}
-                {% endif %}
                 {% if type == 'img' %}
                 <li><a href="#" data-toggle="modal" data-target=".bs-aimg{{i}}{{ quest.pk }}-modal-lg">
                     <img src="{{ MEDIA_URL }}{{ link }}" class="img-thumbnail" style="height: 150px;" alt="упс, картинка потерялась"></a>
@@ -120,28 +86,14 @@
                 {% if quest.source %}
                 <p><strong>Источник: </strong>{{ quest.source|linebreaksbr|urlizetrunc:75 }}</p>
                 {% endif %}
+                <p><strong>Пакеты: </strong></p>
+                <ul id="p_pkg_list_bmore1{{ quest.pk }}"></ul>
             </div>
             {% else %}
             <div id="qmore2{{ quest.pk }}" class="collapse">
-
-                {% if quest.is_blitz %}
-                    <ul class="list-group">
-                        <li class="list-group-item"><strong>Ответ 1: </strong>{{ quest.blitz.answer1|linebreaksbr }}</li>
-                        <li class="list-group-item"><strong>Ответ 2: </strong>{{ quest.blitz.answer2|linebreaksbr }}</li>
-                    {% if quest.blitz.answer3 %}
-                        <li class="list-group-item"><strong>Ответ 3: </strong>{{ quest.blitz.answer3|linebreaksbr }}</li>
-                    </ul>
-                    {% else %}
-                    </ul>
-                    {% endif %}
-                {% else %}
-                    <p><strong>Ответ: </strong>{{ quest.answer|linebreaksbr }}</p>
-                {% endif %}
+                <p><strong>Ответ: </strong>{{ quest.answer|linebreaksbr }}</p>
                 <ul class="no-marker">
                     {% for link, type, i in quest.ext_a_list %}
-                    {% if quest.is_blitz and link %}
-                    К ответу {{ i }}
-                    {% endif %}
                     {% if type == 'img' %}
                     <li><a href="#" data-toggle="modal" data-target=".bs-aimg{{i}}{{ quest.pk }}-modal-lg">
                         <img src="{{ MEDIA_URL }}{{ link }}" class="img-thumbnail" style="height: 150px;" alt="упс, картинка потерялась"></a>
@@ -179,44 +131,10 @@
                 {% if quest.source %}
                 <p><strong>Источник: </strong>{{ quest.source|linebreaksbr|urlizetrunc:75 }}</p>
                 {% endif %}
+                <p><strong>Пакеты: </strong></p>
+                <ul id="p_pkg_list_bmore2{{ quest.pk }}"></ul>
             </div>
             {% endif %}
 
 
-            <div class="row">
-                <div class="pull-left margin10">
 
-                    {% if not request.session.work_pkg_id %}
-                    {% elif quest.id in q_in_pkg_list and current_path|urlencode == '/' %}
-                    <button class="btn btn-success disabled" title="уже в пакете"><span class="glyphicon glyphicon-ok"></span></button>
-                    {% elif quest.id not in q_in_pkg_list and current_path|urlencode == '/' %}
-                    <button class="btn btn-default add_to_pkg" title="добавить в пакет" name="{{ quest.id}}" id="id_add_to_pkg{{ quest.id }}"><span class="glyphicon glyphicon-plus"></span></button>
-                    {% endif %}
-
-
-                    {% if request.session.with_answers == 'True' %}
-                        <a href="#qmore1{{ quest.pk }}" data-toggle="collapse"><span class="btn btn btn-default">подробнее <span class="caret"></span></span></a>
-                    {% else %}
-                        <a href="#qmore2{{ quest.pk }}" data-toggle="collapse"><span class="btn btn btn-default">подробнее <span class="caret"></span></span></a>
-                    {% endif %}
-                    {% if 'viewers' not in user.groups.all|stringformat:"s" and quest.is_blitz %}
-                        <a href="{% url 'blitz_quest_edit' pk=quest.pk %}?from={{ current_path|urlencode }}"><span class="btn btn btn-default">редактировать</span></a>
-                    {% elif 'viewers' not in user.groups.all|stringformat:"s" %}
-                        <a href="{% url 'quest_edit' pk=quest.pk %}?from={{ current_path|urlencode }}"><span class="btn btn btn-default">редактировать</span></a>
-                    {% endif %}
-                </div>
-                {% if 'viewers' not in user.groups.all|stringformat:"s" and current_path|urlencode == '/' %}
-                <div class="pull-right margin10">
-                    <a href="{% url 'quest_remove' pk=quest.pk %}" class="delete" data-confirm="Уверены, что хотите удалить этот вопрос?">
-                        <span class="btn btn btn-danger">Удалить</span></a>
-                </div>
-                {% endif %}
-                {% if 'viewers' not in user.groups.all|stringformat:"s" and current_path|urlencode == '/deleted/' %}
-                <div class="pull-right margin10">
-                    <a href="{% url 'delete_forever' pk=quest.pk %}" class="delete" data-confirm="Уверены, что хотите удалить этот вопрос навсегда?">
-                        <span class="btn btn btn-danger">Удалить навсегда</span></a>
-                </div>
-                {% endif %}
-            </div>
-        </div><!-- panel-body-->
-    </div><!-- panel-default or panel-primary-->

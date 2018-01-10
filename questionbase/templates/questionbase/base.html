@@ -13,10 +13,10 @@
     <link rel="stylesheet" href="{% static 'css/questionbase.css' %}">
     <link rel="icon" type="image/png" href="{% static 'ico/favicon.png' %}">
 </head>
-<body>
+<body style="padding-bottom: 20px; padding-top: 80px;">
 
 <header>
-    <nav class="navbar navbar-inverse navbar-default navbar-static-top">
+    <nav class="navbar navbar-inverse navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -45,7 +45,6 @@
                     <li><a class="dropdown-toggle btn-lg" data-toggle="dropdown" href="#" role="button"><span>Вопрос</span></a>
                         <ul class="dropdown-menu ">
                             <li><a href="{% url 'quest_new' %}?from={{ current_path|urlencode }}">добавить вопрос</a></li>
-                            <li><a href="{% url 'blitz_quest_new' %}?from={{ current_path|urlencode }}">добавить блиц</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -64,7 +63,7 @@
                 {% endif %}
                 {% if request.session.work_pkg_id %}
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="{% url 'pkg_detail' request.session.work_pkg_id %}" class="top-menu btn-lg">выбран пакет {{ request.session.work_pkg_name }}</a></li>
+                    <li><a href="{% url 'pkg_detail' request.session.work_pkg_id %}" class="top-menu btn-lg">выбран пакет {{ request.session.work_pkg_name }}</a></li>
                 </ul>
                 {% endif %}
                 <ul class="nav navbar-nav navbar-right">
@@ -91,8 +90,6 @@
     {% endblock %}
 </div>
 
-
-
 <script>
 // When the user scrolls down 20px from the top of the document, show the button
 window.onscroll = function() {scrollFunction()};
@@ -111,6 +108,32 @@ function topFunction() {
   document.documentElement.scrollTop = 0;
 }
 
+</script>
+
+<script>
+    $(".more").click(function () {
+        var b_id = $(this).attr('id');
+
+        $.ajax({
+            url: '/show_pkg_for_quest/',
+            data: {
+                'b_id': b_id
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.pkg_list) {
+                    //alert(data.pkg_list);
+                    $("#p_pkg_list_" + b_id).empty();
+                    plen = data.pkg_list.length;
+                    for (i = 0; i < plen; i++){
+                        $("#p_pkg_list_" + b_id).append("<li>" + data.pkg_list[i] + "</li>");
+                    }
+                }
+
+            }
+        });
+
+    });
 </script>
 {% block javascript %}{% endblock %}
 

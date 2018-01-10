@@ -11,19 +11,7 @@ class Package(models.Model):
 class PackageDetail(models.Model):
     pkg_id = models.ForeignKey('Package', related_name='pkg_detail')
     quest_id = models.ForeignKey('Question', related_name='question_in_pkg')
-
-
-class Blitz(models.Model):
-    question = models.OneToOneField('Question', related_name='blitz')
-    qtext1 = models.TextField(verbose_name='Вопрос 1')
-    qtext2 = models.TextField(verbose_name='Вопрос 2')
-    qtext3 = models.TextField(verbose_name='Вопрос 3', blank=True)
-    answer1 = models.CharField(max_length=500, verbose_name='Ответ 1')
-    answer2 = models.CharField(max_length=500, verbose_name='Ответ 2')
-    answer3 = models.CharField(max_length=500, verbose_name='Ответ 3', blank=True)
-
-    def __str__(self):
-        return self.qtext1
+    num_in_pkg = models.IntegerField(default=0, blank=True, verbose_name='Номер вопроса')
 
 
 class Question(models.Model):

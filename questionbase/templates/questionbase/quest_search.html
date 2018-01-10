@@ -10,7 +10,49 @@
     </div>
 
     {% for quest in questions %}
-        {% include 'questionbase/quest_list.html' %}
+
+
+        <div class="panel panel-info" id="q{{ quest.id }}">
+        {% if quest.is_played %}
+            <div class="panel-heading">
+        {% else %}
+            <div class="panel-body">
+        {% endif %}
+
+                {% include 'questionbase/quest_list.html' %}
+
+                <div class="row">
+                    <div class="pull-left margin10">
+
+                        {% if not request.session.work_pkg_id %}
+                        {% elif quest.id in q_in_pkg_list %}
+                        <button class="btn btn-success disabled" title="уже в пакете"><span class="glyphicon glyphicon-ok"></span></button>
+                        {% elif quest.id not in q_in_pkg_list %}
+                        <button class="btn btn-default add_to_pkg" title="добавить в пакет" name="{{ quest.id }}" id="id_add_to_pkg{{ quest.id }}"><span class="glyphicon glyphicon-plus"></span></button>
+                        {% endif %}
+
+
+                        {% if request.session.with_answers == 'True' %}
+                            <a href="#qmore1{{ quest.pk }}" data-toggle="collapse" class="more" id="bmore1{{ quest.pk }}"><span class="btn btn btn-default">подробнее <span class="caret"></span></span></a>
+                        {% else %}
+                            <a href="#qmore2{{ quest.pk }}" data-toggle="collapse" class="more" id="bmore2{{ quest.pk }}"><span class="btn btn btn-default">подробнее <span class="caret"></span></span></a>
+                        {% endif %}
+                        {% if 'viewers' not in user.groups.all|stringformat:"s" %}
+                            <a href="{% url 'quest_edit' pk=quest.pk %}?from={{ current_path|urlencode }}"><span class="btn btn btn-default">редактировать</span></a>
+                        {% endif %}
+                    </div>
+                    {% if 'viewers' not in user.groups.all|stringformat:"s" %}
+                    <div class="pull-right margin10">
+                        <a href="{% url 'quest_remove' pk=quest.pk %}" class="delete" data-confirm="Уверены, что хотите удалить этот вопрос?">
+                            <span class="btn btn btn-danger">Удалить</span></a>
+                    </div>
+                    {% endif %}
+                </div>
+
+
+            </div><!-- panel-body-->
+        </div><!-- panel-default or panel-primary-->
+
     {% endfor %}
 
 
@@ -64,6 +106,9 @@ for (var i = 0; i < deleteLinks.length; i++) {
 }
 </script>
 
+
+
+
 <script>
     $(".add_to_pkg").click(function () {
         var q_id = $(this).attr('name');
@@ -76,7 +121,8 @@ for (var i = 0; i < deleteLinks.length; i++) {
             dataType: 'json',
             success: function (data) {
                 if (data.cou) {
-                    alert(data.cou);
+                    //alert(data.cou, data.cou1);
+
                 }
 
             }

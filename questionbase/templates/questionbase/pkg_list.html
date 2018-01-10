@@ -7,47 +7,21 @@
     {% for pkg in pkgs %}
         <a href="{% url 'pkg_detail' pkg.id %}">
             <div class="panel panel-info" id="p{{ pkg.id }}">
-                {% if pkg.is_done %}
-                <div class="panel-heading">
-                {% else %}
                 <div class="panel-body">
-                {% endif %}
-                    <span class="badge">{{ pkg.pkg_detail.count }}</span>    {{ pkg.name }}
-                    {% if 'viewers' not in user.groups.all|stringformat:"s" %}
-
+                    {% if pkg.is_done %}
+                    <span class="glyphicon glyphicon-ok"></span>
                     {% endif %}
+
+                    <span class="label label-primary" style="font-size: 16px;">{{ pkg.pkg_detail.count }}</span>
+                    {{ pkg.name}}
+                    {% if 'viewers' not in user.groups.all|stringformat:"s" %}
+                    {% endif %}
+
                 </div>
             </div>
         </a>
     {% endfor %}
 
-    <nav aria-label="Page navigation">
-        <ul class="pagination">
-            {% if pkgs.has_previous %}
-            <li><a href="?page={{ pkgs.previous_page_number }}&{{ request.session.search_query }}">previous</a></li>
-            {% endif %}
-
-            {% for i in pkgs.paginator.page_range %}
-                {% with border1=pkgs.number|add:-5 border2=pkgs.number|add:5 %}
-                {% if i > border1 and i < border2 or i == 1 or i == pkgs.paginator.num_pages %}
-                    {% if pkgs.number == i %}
-                        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-                    {% else %}
-                        <li><a href="?page={{ i }}&{{ request.session.search_query }}">{{ i }}</a></li>
-                    {% endif %}
-                {% else %}
-                    {% if i == border1 or i == border2 %}
-                        <li><span aria-hidden="true">...</span></li>
-                    {% endif %}
-                {% endif %}
-                {% endwith %}
-            {% endfor %}
-
-            {% if pkgs.has_next %}
-            <li><a href="?page={{ pkgs.next_page_number }}&{{ request.session.search_query }}">next</a></li>
-            {% endif %}
-        </ul>
-    </nav>
 
 </div><!-- col-md-8-->
 
