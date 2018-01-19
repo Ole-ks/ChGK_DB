@@ -20,4 +20,7 @@ urlpatterns = [
     url(r'^show_pkg_for_quest/$', views.show_pkg_for_quest, name='show_pkg_for_quest'),
     url(r'^quest_remove_from_pkg/(?P<pk>\d+)/$', views.quest_remove_from_pkg, name='quest_remove_from_pkg'),
     url(r'^pkg_ready/$', views.pkg_ready, name='pkg_ready'),
+    url(r'^pkg_not_ready/$', views.pkg_not_ready, name='pkg_not_ready'),
+    url(r'^write_pdf_view/$', views.write_pdf_view, name='write_pdf_view'),
+    url(r'^download_files/$', views.download_files, name='download_files'),
 ]

@@ -42,10 +42,7 @@
                 </ul>
                 {% if 'viewers' not in user.groups.all|stringformat:"s" %}
                 <ul class="nav navbar-nav">
-                    <li><a class="dropdown-toggle btn-lg" data-toggle="dropdown" href="#" role="button"><span>Вопрос</span></a>
-                        <ul class="dropdown-menu ">
-                            <li><a href="{% url 'quest_new' %}?from={{ current_path|urlencode }}">добавить вопрос</a></li>
-                        </ul>
+                    <li><a class="btn-lg" href="{% url 'quest_new' %}?from={{ current_path|urlencode }}" role="button"><span>Добавить вопрос</span></a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav">
@@ -63,7 +60,7 @@
                 {% endif %}
                 {% if request.session.work_pkg_id %}
                 <ul class="nav navbar-nav">
-                    <li><a href="{% url 'pkg_detail' request.session.work_pkg_id %}" class="top-menu btn-lg">выбран пакет {{ request.session.work_pkg_name }}</a></li>
+                    <li><a href="{% url 'pkg_detail' request.session.work_pkg_id %}" class="top-menu btn-lg">выбран пакет "{{ request.session.work_pkg_name }}"</a></li>
                 </ul>
                 {% endif %}
                 <ul class="nav navbar-nav navbar-right">

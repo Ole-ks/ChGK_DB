@@ -3,6 +3,36 @@
 
 <div class="col-xs-12 col-sm-12 col-md-9">
 
+    {% if is_done %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="pull-left margin10">
+                    <a href="{% url 'pkg_not_ready' %}"><span class="btn btn btn-default">Отметить пакет как не готовый</span></a>
+                </div>
+                <div class="pull-right margin10">
+                    <a href="{% url 'write_pdf_view' %}"><span class="btn btn btn-default">Сохранить в .docx</span></a>
+                    <a href="{% url 'download_files' %}"><span class="btn btn btn-default">скачать файлы</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% elif questions %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="pull-left margin10">
+                    <a href="{% url 'pkg_ready' %}"><span class="btn btn btn-default">Отметить пакет как готовый</span></a>
+                </div>
+                <div class="pull-right margin10">
+                    <a href="{% url 'write_pdf_view' %}"><span class="btn btn btn-default">Сохранить в .docx</span></a>
+                    <a href="{% url 'download_files' %}"><span class="btn btn btn-default">скачать файлы</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
     {% for quest in questions %}
 
 
@@ -37,7 +67,7 @@
                     </div>
                     {% if 'viewers' not in user.groups.all|stringformat:"s" %}
                     <div class="pull-right margin10">
-                        <a href="{% url 'quest_remove_from_pkg' pk=quest.pk %}" class="delete" data-confirm="Уверены, что хотите удалить этот вопрос?">
+                        <a href="{% url 'quest_remove_from_pkg' pk=quest.pk %}">
                             <span class="btn btn btn-danger">Удалить из пакета</span></a>
                     </div>
                     {% endif %}
@@ -47,11 +77,44 @@
             </div><!-- panel-body-->
         </div><!-- panel-default or panel-primary-->
 
-   {% empty %}
-        Не выбрано ни одного вопроса. <a href="{% url 'search' %}">Перейти к вопросам</a>
-   {% endfor %}
 
-    <a href="{% url 'pkg_ready' %}"><span class="btn btn btn-success">Пакет готов</span></a>
+
+    {% empty %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row margin10">
+                Не выбрано ни одного вопроса. <a href="{% url 'search' %}">Перейти к вопросам</a><br>
+    {% endfor %}
+
+    {% if is_done %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="pull-left margin10">
+                    <a href="{% url 'pkg_not_ready' %}"><span class="btn btn btn-default">Отметить пакет как не готовый</span></a>
+                </div>
+                <div class="pull-right margin10">
+                    <a href="{% url 'write_pdf_view' %}"><span class="btn btn btn-default">Сохранить в .docx</span></a>
+                    <a href="{% url 'download_files' %}"><span class="btn btn btn-default">скачать файлы</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% elif questions %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="pull-left margin10">
+                    <a href="{% url 'pkg_ready' %}"><span class="btn btn btn-default">Отметить пакет как готовый</span></a>
+                </div>
+                <div class="pull-right margin10">
+                    <a href="{% url 'write_pdf_view' %}"><span class="btn btn btn-default">Сохранить в .docx</span></a>
+                    <a href="{% url 'download_files' %}"><span class="btn btn btn-default">скачать файлы</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
 </div><!-- col-md-8-->
 
